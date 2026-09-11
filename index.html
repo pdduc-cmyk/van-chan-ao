@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Vấn Chẩn Ảo — Khoa YHCT CTUMP</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
   --ground:#FBFAF7;--panel:#FFFFFF;--sunken:#F2EFE9;--ink:#1B1917;--ink-2:#4A463F;
@@ -27,7 +27,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--ground);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{background:var(--ground);color:var(--ink);font-family:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4,button,input,select,textarea,.ui,label,th,nav{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
 h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.015em}
 code,pre,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
@@ -103,7 +103,7 @@ label.fld{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin
 .msg.s{background:var(--accent);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
 .msg.sys{align-self:center;background:transparent;color:var(--muted);font-size:13.5px;font-style:italic;max-width:90%;text-align:center}
 .composer{border-top:1px solid var(--line);padding:12px;display:flex;gap:10px}
-.composer textarea{resize:none;height:46px;font-family:"Source Serif 4",serif}
+.composer textarea{resize:none;height:46px;font-family:inherit}
 .mic{width:46px;min-width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink-2);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;padding:0}
 .mic:hover{background:var(--sunken)}
 .mic.on{background:var(--accent);border-color:var(--accent);color:#fff;animation:pulse 1.3s ease-in-out infinite}
@@ -158,6 +158,22 @@ th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vert
 th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunken);font-weight:600}
 tr:last-child td{border-bottom:0}
 pre.json{background:var(--sunken);border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:12.5px;max-height:320px}
+.info{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-family:"Bricolage Grotesque",sans-serif;font-size:12px;font-weight:700;cursor:pointer;padding:0;line-height:1;vertical-align:1px;margin-left:6px}
+.info:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.modalbg{position:fixed;inset:0;background:rgba(20,19,17,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:60}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:760px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 18px 48px rgba(0,0,0,.24)}
+.modalhead{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);padding:18px 22px;display:flex;align-items:flex-start;gap:14px}
+.modalhead h3{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.modalhead .x{margin-left:auto;border:0;background:transparent;color:var(--muted);font-size:22px;line-height:1;cursor:pointer;padding:0 4px}
+.modalhead .x:hover{color:var(--ink)}
+.modalbody{padding:18px 22px 24px}
+.modalbody .lead{font-size:15px;color:var(--ink-2);margin:0 0 16px;max-width:64ch}
+.modalbody .mnemo{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:16px;color:var(--accent);border-left:3px solid var(--accent);padding-left:12px;margin:0 0 16px}
+.modalbody table{min-width:0}
+.modalbody th,.modalbody td{padding:9px 12px;font-size:14.5px}
+.modalbody td:first-child{white-space:nowrap;font-weight:600}
+.modalbody td .en{display:block;font-size:12.5px;color:var(--muted);font-weight:400}
+.modalbody .src{font-size:13px;color:var(--muted);margin:14px 0 0}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:11px 20px;border-radius:9px;font-family:"Bricolage Grotesque",sans-serif;font-size:14px;font-weight:600;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.2)}
 .spin{display:inline-block;width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -455,6 +471,70 @@ function cueGrade(transcript, items){
 }
 function norm(s){ return (s||'').toLowerCase().normalize('NFC'); }
 
+/* ---------- 4a. NỘI DUNG POP-UP KHUNG VẤN CHẨN ---------- */
+const INFO = {
+ socrates:{
+  title:'SOCRATES — khung khai thác triệu chứng đau',
+  mnemo:'“Vị khởi tính lan — Kèm thời tăng nặng”',
+  lead:'Tám bước hỏi một triệu chứng đau theo thứ tự, dùng cho mọi vị trí đau. Câu chữ tắt tiếng Việt giúp nhớ đúng trình tự khi đứng trước người bệnh.',
+  cols:['Viết tắt','Tương ứng SOCRATES','Nội dung hỏi'],
+  rows:[
+   ['<b>VỊ</b> trí','S – Site','Đau ở đâu? Khu trú hay lan toả? Người bệnh có chỉ được đúng điểm đau nhất không?'],
+   ['<b>KHỞI</b> phát','O – Onset','Đau từ khi nào? Đột ngột hay từ từ? Đang làm gì thì đau?'],
+   ['<b>TÍNH</b> chất','C – Character','Đau kiểu gì? (nhói, quặn, âm ỉ, rát bỏng, nặng tức)'],
+   ['<b>LAN</b> truyền','R – Radiation','Đau có lan không, lan đi đâu? (ngực → hàm, tay trái)'],
+   ['<b>KÈM</b> theo','A – Associations','Triệu chứng đi kèm? (buồn nôn, khó thở, chóng mặt, vã mồ hôi)'],
+   ['<b>THỜI</b> gian','T – Timing','Kéo dài bao lâu? Tần suất? Có theo thời điểm trong ngày không?'],
+   ['<b>TĂNG</b> giảm','E – Exacerbating / relieving','Gì làm đau tăng? Gì làm dịu? (tư thế, thuốc, ăn uống, nghỉ ngơi)'],
+   ['<b>NẶNG</b><br><span class="en">mức độ</span>','S – Severity','Thang điểm 1–10; ảnh hưởng sinh hoạt, giấc ngủ']
+  ]},
+ ice:{
+  title:'ICE — Ideas, Concerns, Expectations',
+  mnemo:'Ý nghĩ — Lo lắng — Mong đợi',
+  lead:'Bộ ba khai thác góc nhìn của người bệnh (patient’s perspective), là thành phần bắt buộc trong mô hình giao tiếp Calgary–Cambridge (Kurtz &amp; Silverman) và trong “các nhiệm vụ của buổi khám” của Pendleton. Nếu SOCRATES hỏi <i>bệnh</i>, thì ICE hỏi <i>người mang bệnh</i>.',
+  cols:['ICE','Tiếng Việt','Câu hỏi mẫu'],
+  rows:[
+   ['<b>I</b> – Ideas','Ý nghĩ, cách hiểu của người bệnh về bệnh','“Theo anh/chị, nguyên nhân có thể là gì?” — “Anh/chị nghĩ bệnh này do đâu mà ra?”'],
+   ['<b>C</b> – Concerns','Lo lắng, điều người bệnh sợ nhất','“Điều gì làm anh/chị lo nhất về triệu chứng này?” — “Anh/chị có sợ nó là bệnh gì không?”'],
+   ['<b>E</b> – Expectations','Mong đợi khi đi khám','“Hôm nay anh/chị mong tôi giúp được điều gì nhất?” — “Anh/chị kỳ vọng điều trị ra sao?”']
+  ],
+  note:'Bỏ ICE là lỗi hay gặp nhất khi sinh viên tập trung vào triệu chứng: bệnh sử đầy đủ nhưng không biết người bệnh sợ gì và muốn gì.'},
+ thapvan:{
+  title:'Thập vấn ca — mười nội dung vấn chẩn YHCT',
+  mnemo:'Hàn nhiệt · Hãn · Đầu thân · Nhị tiện · Ẩm thực · Hung phúc · Nhĩ mục · Thuỵ miên · Cựu bệnh &amp; nhân do · Kinh đới thai sản',
+  lead:'Mười nhóm câu hỏi của vấn chẩn, đi sau vọng và văn chẩn. Bảng kiểm trong ứng dụng chi tiết hoá mười nhóm này thành 22 mục để chấm được từng ý.',
+  cols:['Nhóm','Nội dung hỏi','Ý nghĩa biện chứng'],
+  rows:[
+   ['① Hàn nhiệt','Sợ lạnh hay sợ nóng; có sốt không, sốt kiểu gì','Phân biểu lý, hàn nhiệt; ố hàn phát nhiệt là biểu chứng'],
+   ['② Hãn','Có mồ hôi không; tự hãn hay đạo hãn; ra ở đâu','Tự hãn thuộc khí hư, đạo hãn thuộc âm hư'],
+   ['③ Đầu thân','Đau đầu, chóng mặt, đau mỏi mình mẩy, tê nặng','Vị trí đau đầu định kinh; nặng nề thường do thấp'],
+   ['④ Nhị tiện','Tiểu tiện (lượng, màu, buốt, đêm); đại tiện (táo, lỏng)','Tiểu vàng sậm, táo bón gợi nhiệt; tiểu trong, tiêu lỏng gợi hàn'],
+   ['⑤ Ẩm thực','Ngon miệng, lượng ăn, khát, thích nóng/mát, vị trong miệng','Miệng đắng thuộc Can Đởm; khát thích mát thuộc nhiệt'],
+   ['⑥ Hung phúc','Tức ngực, hồi hộp, đầy trướng bụng, tức hạ sườn','Tức hạ sườn gợi Can khí uất; đầy trướng gợi khí trệ'],
+   ['⑦ Nhĩ mục','Ù tai, nghe kém; mắt mờ, khô, hoa mắt','Liên quan Can Thận; ù tai đột ngột thường thực'],
+   ['⑧ Thuỵ miên','Khó vào giấc, dễ tỉnh, mộng nhiều, thời lượng ngủ','Tâm Tỳ hư, Tâm Thận bất giao'],
+   ['⑨ Cựu bệnh &amp; nhân do','Bệnh cũ, đợt tương tự; hoàn cảnh phát bệnh','Phân biệt tân bệnh — cựu bệnh; tìm nguyên nhân ăn uống, cảm nhiễm, tình chí, lao lực'],
+   ['⑩ Kinh đới thai sản','Kinh nguyệt, khí hư, thai sản (với phụ nữ)','Bắt buộc ở phụ nữ tuổi sinh đẻ, nhất là khi có đau bụng']
+  ]}
+};
+function openInfo(key){
+  const d=INFO[key]; if(!d) return;
+  const bg=document.createElement('div'); bg.className='modalbg'; bg.id='modalbg';
+  bg.innerHTML='<div class="modal" role="dialog" aria-modal="true" aria-label="'+esc(d.title)+'">'+
+    '<div class="modalhead"><h3>'+esc(d.title)+'</h3><button class="x" id="modalX" aria-label="Đóng">×</button></div>'+
+    '<div class="modalbody">'+
+      (d.mnemo?'<p class="mnemo">'+d.mnemo+'</p>':'')+
+      (d.lead?'<p class="lead">'+d.lead+'</p>':'')+
+      '<div class="tablewrap"><table><thead><tr>'+d.cols.map(c=>'<th>'+esc(c)+'</th>').join('')+'</tr></thead><tbody>'+
+      d.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'+
+      (d.note?'<p class="src">'+d.note+'</p>':'')+
+    '</div></div>';
+  document.body.appendChild(bg);
+  bg.addEventListener('click', e=>{ if(e.target===bg || e.target.id==='modalX') bg.remove(); });
+  document.getElementById('modalX').focus();
+}
+function infoBtn(key,label){ return '<button class="info" data-info="'+key+'" title="Giải thích '+label+'" aria-label="Giải thích '+label+'">i</button>'; }
+
 /* ---------- 4b. GIỌNG NÓI — nhận dạng & đọc (Web Speech API) ---------- */
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 const VOICE = {
@@ -624,6 +704,11 @@ function vBrief(){
    '<div class="panel" style="margin-top:20px">'+
     '<h3 style="font-size:15px">Bối cảnh</h3><p style="margin:8px 0 18px">'+esc(ci.setting)+'</p>'+
     '<h3 style="font-size:15px">Nhiệm vụ</h3><ul style="margin:8px 0 18px">'+ci.task.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>'+
+    '<h3 style="font-size:15px">Khung vấn chẩn dùng trong trạm này</h3>'+
+    '<p style="margin:8px 0 18px">Bấm để xem bảng giải thích: '+
+      infoBtn('socrates','SOCRATES')+' <b>SOCRATES</b> &nbsp; '+
+      infoBtn('thapvan','Thập vấn')+' <b>Thập vấn</b> &nbsp; '+
+      infoBtn('ice','ICE')+' <b>ICE</b></p>'+
     '<h3 style="font-size:15px">Thời gian</h3><p style="margin:8px 0 0">'+cs.durationMin+' phút hỏi bệnh. Hết giờ trạm tự đóng, sau đó vẫn chấm bình thường.</p>'+
    '</div>'+
    '<div class="note i">Có thể <b>nói trực tiếp</b> với bệnh nhân: bấm nút micro (hoặc phím Space) để nói, bệnh nhân sẽ trả lời thành tiếng. Bật “Rảnh tay” để máy tự nghe tiếp sau mỗi câu trả lời.</div>'+
@@ -676,9 +761,10 @@ function tabBody(cs){
   }
   const notes = store.get('notes')[cs.id]||'';
   return '<h4>Ghi chú riêng tại trạm</h4><textarea id="noteBox" style="height:140px;font-family:inherit" placeholder="Ghi chú của bạn, chỉ bạn thấy khi quay lại trạm này…">'+esc(notes)+'</textarea>'+
-    '<h4>Gợi nhắc khung vấn chẩn</h4><ul><li><b>SOCRATES</b> — Site, Onset, Character, Radiation, Associated, Time, Exacerbating/Relieving, Severity</li>'+
-    '<li><b>Thập vấn</b> — hàn nhiệt · hãn · đầu thân · nhị tiện · ẩm thực · hung phúc · nhĩ mục · thuỵ miên · cựu bệnh &amp; nhân do · kinh đới thai sản</li>'+
-    '<li><b>ICE</b> — người bệnh nghĩ gì, lo gì, mong gì</li></ul>';
+    '<h4>Gợi nhắc khung vấn chẩn</h4><p class="muted" style="font-size:13px;margin:4px 0 8px">Bấm dấu <b>i</b> để xem bảng giải thích đầy đủ.</p><ul>'+
+    '<li><b>SOCRATES</b>'+infoBtn('socrates','SOCRATES')+' — vị, khởi, tính, lan, kèm, thời, tăng, nặng</li>'+
+    '<li><b>Thập vấn</b>'+infoBtn('thapvan','Thập vấn')+' — hàn nhiệt · hãn · đầu thân · nhị tiện · ẩm thực · hung phúc · nhĩ mục · thuỵ miên · cựu bệnh &amp; nhân do · kinh đới thai sản</li>'+
+    '<li><b>ICE</b>'+infoBtn('ice','ICE')+' — người bệnh nghĩ gì, lo gì, mong gì</li></ul>';
 }
 
 function vMarking(){
@@ -713,7 +799,8 @@ function sheet(items, mode){
     const its = items.filter(i=>i.d===d.id); if(!its.length) return;
     const nSelf = its.filter(i=>SES.selfMarking[i.id]).length;
     const nAI = its.filter(i=>SES.aiMarking[i.id]&&SES.aiMarking[i.id].pass).length;
-    html+='<div class="mkdom"><span>'+esc(d.label)+'</span><span>'+(mode==='self'?nSelf:nAI)+'/'+its.length+' · trọng số '+d.weight+'</span></div>';
+    const ik = d.id==='hpi'?'socrates': d.id==='thapvan'?'thapvan': d.id==='ket-thuc'?'ice':'';
+    html+='<div class="mkdom"><span>'+esc(d.label)+(ik?infoBtn(ik,d.label):'')+'</span><span>'+(mode==='self'?nSelf:nAI)+'/'+its.length+' · trọng số '+d.weight+'</span></div>';
     its.forEach(i=>{
       const sv = !!SES.selfMarking[i.id];
       const ai = SES.aiMarking[i.id];
@@ -874,6 +961,8 @@ function render(){
 }
 
 document.addEventListener('click', async (e)=>{
+  const inf = e.target.closest('[data-info]');
+  if(inf){ e.preventDefault(); openInfo(inf.dataset.info); return; }
   const t = e.target.closest('[data-go],[data-filter],[data-start],[data-tab],[data-ck],[data-flip],[data-vp],[data-open],[data-check],[data-expcase]');
   const id = e.target.id;
 
@@ -935,6 +1024,7 @@ document.addEventListener('change', (e)=>{
       store.set('cases',cs); toast('Đã nhập '+arr.length+' ca'); render(); }); }
 });
 document.addEventListener('keydown',(e)=>{
+  if(e.key==='Escape'){ const m=document.getElementById('modalbg'); if(m){ m.remove(); return; } }
   if(e.target.id==='inp' && e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
   if(!typing && e.code==='Space' && V.view==='consult' && SES && !SES.ended){ e.preventDefault(); VOICE.toggle(); }
