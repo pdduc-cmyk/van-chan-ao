@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vấn Chẩn Ảo — Khoa YHCT CTUMP</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#FBFAF7;--panel:#FFFFFF;--sunken:#F2EFE9;--ink:#1B1917;--ink-2:#4A463F;
+  --muted:#7C766B;--line:#DCD6CA;--accent:#A63A28;--accent-soft:#F3E3DE;
+  --indigo:#2C4A5C;--indigo-soft:#E2EAEE;--ok:#3F6B4A;--ok-soft:#E3EDE6;
+  --warn:#8A6212;--warn-soft:#F6EBD3;--shadow:0 1px 2px rgba(27,25,23,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ground:#141311;--panel:#1C1B18;--sunken:#232120;--ink:#F0EDE6;--ink-2:#C6C0B5;
+  --muted:#8F887C;--line:#33302B;--accent:#E4826D;--accent-soft:#3A241F;
+  --indigo:#8FB6C9;--indigo-soft:#1E2C34;--ok:#86B893;--ok-soft:#1F2B22;
+  --warn:#D3AA55;--warn-soft:#302711;--shadow:0 1px 2px rgba(0,0,0,.4);
+}}
+:root[data-theme="dark"]{
+  --ground:#141311;--panel:#1C1B18;--sunken:#232120;--ink:#F0EDE6;--ink-2:#C6C0B5;
+  --muted:#8F887C;--line:#33302B;--accent:#E4826D;--accent-soft:#3A241F;
+  --indigo:#8FB6C9;--indigo-soft:#1E2C34;--ok:#86B893;--ok-soft:#1F2B22;
+  --warn:#D3AA55;--warn-soft:#302711;--shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--ground);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,button,input,select,textarea,.ui,label,th,nav{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.015em}
+code,pre,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* topbar */
+.top{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:1px solid var(--line)}
+.top .in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:17px;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
+.brand small{font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+.top nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.top nav button{background:none;border:0;color:var(--muted);font-size:14px;font-weight:600;padding:7px 11px;border-radius:7px;cursor:pointer}
+.top nav button:hover{background:var(--sunken);color:var(--ink)}
+.top nav button.on{background:var(--accent-soft);color:var(--accent)}
+
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 80px}
+.narrow{max-width:860px}
+
+/* generic */
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;font-family:"Bricolage Grotesque",sans-serif}
+.muted{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.spread{display:flex;gap:16px;justify-content:space-between;align-items:baseline;flex-wrap:wrap}
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+hr.sep{border:0;height:1px;background:var(--line);margin:26px 0}
+
+button.btn{font-size:15px;font-weight:600;padding:10px 18px;border-radius:9px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+button.btn:hover{filter:brightness(1.07)}
+button.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button.btn.ghost:hover{background:var(--sunken)}
+button.btn.sm{font-size:13.5px;padding:7px 13px}
+button.btn:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);width:100%}
+label.fld{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+.field{margin-bottom:14px}
+
+.pill{display:inline-block;font-family:"Bricolage Grotesque",sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:5px;background:var(--sunken);color:var(--ink-2)}
+.pill.ac{background:var(--accent-soft);color:var(--accent)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.wr{background:var(--warn-soft);color:var(--warn)}
+.pill.in{background:var(--indigo-soft);color:var(--indigo)}
+
+/* home */
+.hero h1{font-size:clamp(30px,5vw,44px);font-weight:800;line-height:1.05}
+.hero p{color:var(--ink-2);max-width:60ch}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.stat .v{font-family:"Bricolage Grotesque",sans-serif;font-size:30px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stat .l{font-size:13px;color:var(--muted);margin-top:6px;font-family:"Bricolage Grotesque",sans-serif;font-weight:600}
+
+/* case cards */
+.case{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:9px;box-shadow:var(--shadow)}
+.case h3{font-size:18px;font-weight:600}
+.case .d{font-size:14.5px;color:var(--ink-2);line-height:1.5;flex:1}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.filters button{font-size:13.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink-2);cursor:pointer}
+.filters button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+
+/* consult */
+.consult{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;align-items:start}
+.chatbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;height:min(64vh,600px)}
+.chathead{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.timer{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:16px;font-variant-numeric:tabular-nums;padding:3px 10px;border-radius:6px;background:var(--sunken)}
+.timer.low{background:var(--accent-soft);color:var(--accent)}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:78%;padding:10px 14px;border-radius:12px;font-size:15.5px;line-height:1.55}
+.msg.p{background:var(--sunken);border-bottom-left-radius:4px;align-self:flex-start}
+.msg.s{background:var(--accent);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+.msg.sys{align-self:center;background:transparent;color:var(--muted);font-size:13.5px;font-style:italic;max-width:90%;text-align:center}
+.composer{border-top:1px solid var(--line);padding:12px;display:flex;gap:10px}
+.composer textarea{resize:none;height:46px;font-family:"Source Serif 4",serif}
+.mic{width:46px;min-width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink-2);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;padding:0}
+.mic:hover{background:var(--sunken)}
+.mic.on{background:var(--accent);border-color:var(--accent);color:#fff;animation:pulse 1.3s ease-in-out infinite}
+.mic.speak{background:var(--indigo-soft);border-color:var(--indigo);color:var(--indigo)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(166,58,40,.45)}50%{box-shadow:0 0 0 7px rgba(166,58,40,0)}}
+.voicebar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px solid var(--line);background:var(--sunken);font-family:"Bricolage Grotesque",sans-serif;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.voicebar label{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--ink-2);cursor:pointer}
+.voicebar input[type=checkbox]{width:16px;height:16px}
+.vstate{margin-left:auto;font-variant-numeric:tabular-nums}
+.vstate b{color:var(--accent)}
+.side{position:sticky;top:70px}
+.tabs{display:flex;gap:2px;background:var(--sunken);padding:3px;border-radius:9px;margin-bottom:12px}
+.tabs button{flex:1;font-size:13px;font-weight:600;padding:7px 6px;border:0;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer}
+.tabs button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+.tabbody{font-size:14.5px;max-height:52vh;overflow-y:auto}
+.tabbody h4{font-size:14px;margin:14px 0 4px}
+.tabbody ul{padding-left:18px;margin:6px 0}
+.tabbody li{margin:3px 0}
+.locked{text-align:center;color:var(--muted);padding:26px 10px;font-size:14.5px}
+
+/* marking */
+.mk{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);margin-top:14px}
+.mkdom{background:var(--sunken);padding:9px 16px;font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);display:flex;justify-content:space-between;border-top:1px solid var(--line)}
+.mkitem{display:grid;grid-template-columns:minmax(0,1fr) 74px 74px;gap:10px;align-items:start;padding:11px 16px;border-top:1px solid var(--line);font-size:15px}
+.mkitem .t{line-height:1.45}
+.mkitem .hint{font-size:13px;color:var(--muted);margin-top:3px;display:block}
+.mkitem .ev{font-size:13px;color:var(--indigo);margin-top:5px;padding-left:10px;border-left:2px solid var(--indigo-soft);display:block}
+.mkitem .col{text-align:center;padding-top:2px}
+.mkhead{display:grid;grid-template-columns:minmax(0,1fr) 74px 74px;gap:10px;padding:9px 16px;font-family:"Bricolage Grotesque",sans-serif;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mkhead .col{text-align:center}
+.mkitem.diff{background:var(--warn-soft)}
+.mkitem.crit .t::before{content:"● ";color:var(--accent);font-size:11px;vertical-align:2px}
+input[type=checkbox]{width:19px;height:19px;accent-color:var(--accent);cursor:pointer}
+.dot{display:inline-block;width:19px;height:19px;border-radius:5px;line-height:19px;font-size:12px;font-weight:700;font-family:"Bricolage Grotesque",sans-serif}
+.dot.y{background:var(--ok-soft);color:var(--ok)}
+.dot.n{background:var(--sunken);color:var(--muted)}
+
+/* score */
+.srow{display:grid;grid-template-columns:minmax(120px,1.5fr) minmax(0,3fr) 62px;gap:12px;align-items:center;font-size:14.5px;margin:9px 0}
+.srow .lbl{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:14px}
+.bar{height:9px;background:var(--sunken);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.bar i.b{background:var(--indigo)}
+.srow .val{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.bigscore{font-family:"Bricolage Grotesque",sans-serif;font-size:56px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:13px 17px;border-radius:0 8px 8px 0;margin:18px 0;font-size:15px}
+.note.i{border-color:var(--indigo);background:var(--indigo-soft)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--sunken);font-weight:600}
+tr:last-child td{border-bottom:0}
+pre.json{background:var(--sunken);border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:12.5px;max-height:320px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:11px 20px;border-radius:9px;font-family:"Bricolage Grotesque",sans-serif;font-size:14px;font-weight:600;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.2)}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+@media (max-width:900px){
+  .consult{grid-template-columns:1fr}
+  .side{position:static}
+  .chatbox{height:min(58vh,480px)}
+}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="in">
+  <div class="brand"><span class="dot"></span>Vấn Chẩn Ảo <small>Khoa YHCT · CTUMP</small></div>
+  <nav id="nav"></nav>
+</div></div>
+
+<div id="app" class="wrap"></div>
+<script>
+/* ============================================================
+   VẤN CHẨN ẢO — prototype 1 file
+   Bố cục mã: DATA → STORE → LLM(Gemini) → SCORING → VIEWS → ROUTER
+   Khi lên bản có máy chủ: chỉ thay ruột STORE và LLM.
+   ============================================================ */
+
+/* ---------- 1. BẢNG KIỂM LÕI (dùng chung cho mọi ca) ---------- */
+const DOMAINS = [
+  {id:'mo-dau',   label:'Mở đầu & giao tiếp',      weight:15},
+  {id:'hpi',      label:'Bệnh sử YHHĐ (SOCRATES)', weight:25},
+  {id:'thapvan',  label:'Thập vấn YHCT',           weight:30},
+  {id:'tiensu',   label:'Tiền sử & lối sống',      weight:15},
+  {id:'ket-thuc', label:'ICE & kết thúc',          weight:15}
+];
+
+// text  = mục bảng kiểm; hint = cách hỏi mẫu (hiện khi chưa đạt)
+// cues  = từ khoá dùng cho chế độ chấm dự phòng khi không có API
+// critical: bỏ sót thì trạm không thể xếp loại Đạt
+const CORE_ITEMS = [
+ // --- A. Mở đầu & giao tiếp ---
+ {id:'a1',d:'mo-dau',text:'Chào hỏi, tự giới thiệu tên và vai trò',hint:'“Chào cô, em là sinh viên Y học cổ truyền, tên là…”',cues:['chào','em là','tôi là sinh viên','giới thiệu']},
+ {id:'a2',d:'mo-dau',text:'Xác nhận họ tên và tuổi người bệnh',hint:'“Cô cho em hỏi cô tên đầy đủ là gì, năm nay bao nhiêu tuổi ạ?”',cues:['tên đầy đủ','tên gì','bao nhiêu tuổi','năm nay']},
+ {id:'a3',d:'mo-dau',text:'Nêu mục đích buổi hỏi bệnh và xin phép bắt đầu',hint:'“Em xin phép hỏi cô một số câu về tình trạng hiện tại, cô đồng ý không ạ?”',cues:['xin phép','em sẽ hỏi','cho phép','đồng ý']},
+ {id:'a4',d:'mo-dau',text:'Mở đầu bằng câu hỏi mở',hint:'“Hôm nay cô đến khám vì vấn đề gì ạ?”',cues:['vì vấn đề gì','kể','sao cô đến','khó chịu gì','giúp gì']},
+ {id:'a5',d:'mo-dau',text:'Để người bệnh trình bày, không ngắt lời ở phần mở đầu',hint:'Nghe hết câu trả lời đầu tiên rồi mới hỏi tiếp.',cues:[]},
+ {id:'a6',d:'mo-dau',text:'Dùng ngôn ngữ đời thường, không dùng thuật ngữ với người bệnh',hint:'Nói “nóng ruột, cồn cào” thay vì “vị quản thống”.',cues:[]},
+ {id:'a7',d:'mo-dau',text:'Có tóm tắt / kiểm chứng lại thông tin giữa chừng',hint:'“Vậy là cô đau từ trưa nay, đau từng cơn, đúng không ạ?”',cues:['vậy là','đúng không','em tóm tắt','nghĩa là']},
+
+ // --- B. Bệnh sử YHHĐ (SOCRATES) ---
+ {id:'b1',d:'hpi',text:'Vị trí đau (Site)',hint:'“Cô chỉ giúp em chỗ đau nhất ở đâu?”',critical:true,cues:['đau ở đâu','vị trí','chỗ nào','chỉ giúp']},
+ {id:'b2',d:'hpi',text:'Thời điểm và hoàn cảnh khởi phát (Onset)',hint:'“Đau bắt đầu từ khi nào, lúc đó cô đang làm gì?”',critical:true,cues:['từ khi nào','bắt đầu','khởi phát','lúc nào','mấy giờ']},
+ {id:'b3',d:'hpi',text:'Tính chất cơn đau (Character)',hint:'“Đau kiểu gì — quặn, âm ỉ, nóng rát hay như dao đâm?”',cues:['đau kiểu','tính chất','như thế nào','quặn','âm ỉ','rát']},
+ {id:'b4',d:'hpi',text:'Hướng lan (Radiation)',hint:'“Cơn đau có lan đi đâu không — ra lưng, lên ngực, xuống bụng dưới?”',cues:['lan','xuyên','chạy ra','lan ra']},
+ {id:'b5',d:'hpi',text:'Triệu chứng kèm theo (Associated symptoms)',hint:'“Kèm theo đau, cô có buồn nôn, nôn, sốt hay gì khác không?”',critical:true,cues:['kèm theo','triệu chứng khác','buồn nôn','nôn','sốt','còn gì khác']},
+ {id:'b6',d:'hpi',text:'Diễn tiến theo thời gian (Time course)',hint:'“Từ lúc bắt đầu tới giờ, đau tăng lên, giảm đi hay từng cơn?”',cues:['diễn tiến','tăng dần','giảm','liên tục','từng cơn','tới giờ']},
+ {id:'b7',d:'hpi',text:'Yếu tố làm tăng / giảm (Exacerbating & Relieving)',hint:'“Có gì làm đau nặng hơn hay dễ chịu hơn không?”',cues:['nặng hơn','giảm đau','dễ chịu','tư thế','ăn vào','uống thuốc']},
+ {id:'b8',d:'hpi',text:'Mức độ đau theo thang 0–10 (Severity)',hint:'“Nếu 10 là đau nhất cô từng chịu, cơn này mấy điểm?”',cues:['thang điểm','mấy điểm','0 đến 10','mức độ','bao nhiêu điểm']},
+ {id:'b9',d:'hpi',text:'Hỏi triệu chứng báo động (nôn máu, phân đen, sụt cân, vàng da, sốt cao)',hint:'“Cô có nôn ra máu, đi cầu phân đen, vàng da hay sụt cân không?”',critical:true,cues:['nôn ra máu','phân đen','sụt cân','vàng da','vàng mắt','đi cầu ra máu']},
+
+ // --- C. Thập vấn YHCT ---
+ {id:'c1',d:'thapvan',text:'① Hàn nhiệt — sợ lạnh hay sợ nóng',hint:'“Người cô lúc này sợ lạnh hay sợ nóng?”',critical:true,cues:['sợ lạnh','sợ nóng','ớn lạnh','rét']},
+ {id:'c2',d:'thapvan',text:'① Hàn nhiệt — có sốt không, kiểu sốt (cơn, chiều, nóng lạnh xen kẽ)',hint:'“Cô có sốt không, sốt về lúc nào trong ngày?”',cues:['sốt','nóng người','sốt về chiều','đo nhiệt độ']},
+ {id:'c3',d:'thapvan',text:'② Hãn — có ra mồ hôi không, tự hãn hay mồ hôi trộm',hint:'“Cô có ra mồ hôi nhiều không, ban ngày hay đêm ngủ?”',cues:['mồ hôi','đổ mồ hôi','mồ hôi trộm','ra mồ hôi']},
+ {id:'c4',d:'thapvan',text:'② Hãn — vị trí ra mồ hôi (đầu mặt, tay chân, nửa người)',hint:'“Mồ hôi ra ở đâu nhiều nhất — đầu, lòng bàn tay hay khắp người?”',cues:['mồ hôi ở đâu','lòng bàn tay','đầu mặt','khắp người']},
+ {id:'c5',d:'thapvan',text:'③ Đầu thân — đau đầu (vị trí, tính chất)',hint:'“Cô có đau đầu không, đau vùng nào?”',cues:['đau đầu','nhức đầu','đầu']},
+ {id:'c6',d:'thapvan',text:'③ Đầu thân — chóng mặt, hoa mắt',hint:'“Cô có chóng mặt, hoa mắt không?”',cues:['chóng mặt','hoa mắt','choáng','xây xẩm']},
+ {id:'c7',d:'thapvan',text:'③ Đầu thân — đau mỏi mình mẩy, tê bì, nặng nề',hint:'“Người cô có mỏi, nặng nề hay tê bì chỗ nào không?”',cues:['mỏi','nặng người','tê','ê ẩm','đau mình']},
+ {id:'c8',d:'thapvan',text:'④ Nhị tiện — tiểu tiện (lượng, màu, buốt rắt, tiểu đêm)',hint:'“Cô đi tiểu thế nào — nước tiểu vàng hay trong, có buốt không?”',cues:['tiểu','nước tiểu','đi tiểu','tiểu đêm']},
+ {id:'c9',d:'thapvan',text:'④ Nhị tiện — đại tiện (số lần, tính chất phân, táo/lỏng)',hint:'“Cô đi cầu mấy lần một ngày, phân lỏng hay táo?”',critical:true,cues:['đi cầu','đại tiện','phân','táo bón','tiêu chảy','đi ngoài']},
+ {id:'c10',d:'thapvan',text:'⑤ Ẩm thực — cảm giác ngon miệng, lượng ăn, đầy bụng sau ăn',hint:'“Cô ăn có thấy ngon miệng không, ăn được nhiều không?”',cues:['ăn uống','ngon miệng','chán ăn','ăn được','đầy bụng']},
+ {id:'c11',d:'thapvan',text:'⑤ Ẩm thực — khát nước, thích uống nóng hay mát',hint:'“Cô có khát không, thích uống nước ấm hay nước mát?”',cues:['khát','uống nước','nước ấm','nước mát']},
+ {id:'c12',d:'thapvan',text:'⑤ Ẩm thực — vị giác trong miệng (đắng, ngọt, chua, nhạt, hôi miệng)',hint:'“Trong miệng cô có vị gì lạ không — đắng, nhạt hay chua?”',cues:['trong miệng','miệng đắng','vị','nhạt miệng','hôi miệng']},
+ {id:'c13',d:'thapvan',text:'⑤ Ẩm thực — ợ hơi, ợ chua, buồn nôn, nôn',hint:'“Cô có ợ hơi, ợ chua hay buồn nôn không?”',cues:['ợ hơi','ợ chua','buồn nôn','nôn','ói']},
+ {id:'c14',d:'thapvan',text:'⑥ Hung phúc — tức ngực, hồi hộp, khó thở',hint:'“Cô có tức ngực, hồi hộp hay khó thở không?”',cues:['tức ngực','hồi hộp','khó thở','đánh trống ngực']},
+ {id:'c15',d:'thapvan',text:'⑥ Hung phúc — đầy trướng bụng, tức hạ sườn',hint:'“Bụng cô có trướng, tức vùng hạ sườn không?”',cues:['trướng bụng','đầy bụng','hạ sườn','mạn sườn','tức bụng']},
+ {id:'c16',d:'thapvan',text:'⑦ Nhĩ — ù tai, nghe kém',hint:'“Tai cô có ù hay nghe kém đi không?”',cues:['ù tai','tai','nghe kém']},
+ {id:'c17',d:'thapvan',text:'⑦ Mục — mắt mờ, khô mắt, quáng',hint:'“Mắt cô có mờ, khô hay nhức không?”',cues:['mắt','mờ mắt','khô mắt','nhức mắt']},
+ {id:'c18',d:'thapvan',text:'⑧ Thuỵ miên — khó vào giấc, dễ tỉnh, mộng nhiều',hint:'“Cô ngủ thế nào — khó ngủ, dễ tỉnh hay mơ nhiều?”',cues:['ngủ','giấc ngủ','mất ngủ','khó ngủ','mơ']},
+ {id:'c19',d:'thapvan',text:'⑨ Cựu bệnh — đã từng có đợt tương tự chưa',hint:'“Trước đây cô đã từng đau như vậy lần nào chưa?”',cues:['trước đây','từng bị','lần nào chưa','đã bao giờ']},
+ {id:'c20',d:'thapvan',text:'⑨ Nhân do — hoàn cảnh phát bệnh (ăn uống, cảm nhiễm, tình chí, lao lực)',hint:'“Trước khi đau, cô ăn gì, có bị lạnh, lo nghĩ hay làm việc gắng sức không?”',critical:true,cues:['trước khi đau','ăn gì','nguyên nhân','lo nghĩ','stress','làm việc nặng','bị lạnh']},
+ {id:'c21',d:'thapvan',text:'⑩ Phụ nữ — kinh nguyệt (chu kỳ, lượng, màu, đau bụng kinh, kỳ cuối)',hint:'“Kinh nguyệt cô thế nào, kỳ vừa rồi cách đây bao lâu?”',critical:true,cues:['kinh nguyệt','chu kỳ','hành kinh','kỳ kinh','tháng']},
+ {id:'c22',d:'thapvan',text:'⑩ Phụ nữ — khí hư, thai sản, đang mang thai hay cho bú',hint:'“Cô có khí hư bất thường không, hiện có mang thai hay cho con bú không?”',cues:['khí hư','mang thai','có thai','cho bú','sinh con']},
+
+ // --- D. Tiền sử & lối sống ---
+ {id:'d1',d:'tiensu',text:'Tiền sử bệnh nội – ngoại khoa, phẫu thuật',hint:'“Cô có bệnh gì đang điều trị, đã mổ lần nào chưa?”',cues:['tiền sử','bệnh gì','mổ','phẫu thuật','đang điều trị']},
+ {id:'d2',d:'tiensu',text:'Thuốc đang dùng, kể cả thuốc nam / thuốc bắc / thực phẩm chức năng',hint:'“Cô đang uống thuốc gì, có dùng thuốc nam thuốc bắc không?”',critical:true,cues:['thuốc gì','đang uống','thuốc nam','thuốc bắc','thực phẩm chức năng','tự mua']},
+ {id:'d3',d:'tiensu',text:'Tiền sử dị ứng (thuốc, thức ăn)',hint:'“Cô có dị ứng thuốc hay thức ăn gì không?”',critical:true,cues:['dị ứng']},
+ {id:'d4',d:'tiensu',text:'Tiền sử gia đình',hint:'“Trong nhà có ai mắc bệnh tương tự không?”',cues:['gia đình','người nhà','cha mẹ','di truyền']},
+ {id:'d5',d:'tiensu',text:'Thói quen ăn uống, sinh hoạt, vận động',hint:'“Cô ăn uống thường ngày thế nào, có hay ăn dầu mỡ, ăn khuya không?”',cues:['ăn uống hằng ngày','thói quen','dầu mỡ','ăn khuya','vận động','tập thể dục']},
+ {id:'d6',d:'tiensu',text:'Rượu bia, thuốc lá, chất kích thích',hint:'“Cô có uống rượu bia, hút thuốc hay uống cà phê không?”',cues:['rượu','bia','thuốc lá','hút thuốc','cà phê']},
+ {id:'d7',d:'tiensu',text:'Nghề nghiệp, hoàn cảnh sống',hint:'“Cô làm nghề gì, ở nhà với ai?”',cues:['nghề','làm gì','công việc','ở với ai']},
+
+ // --- E. ICE & kết thúc ---
+ {id:'e1',d:'ket-thuc',text:'Ideas — người bệnh nghĩ nguyên nhân do đâu',hint:'“Bản thân cô nghĩ đợt này là do gì ạ?”',cues:['cô nghĩ','theo cô','tự cô thấy','nghĩ do']},
+ {id:'e2',d:'ket-thuc',text:'Concerns — điều người bệnh lo lắng nhất',hint:'“Điều gì làm cô lo nhất lúc này?”',critical:true,cues:['lo','lo lắng','sợ','băn khoăn']},
+ {id:'e3',d:'ket-thuc',text:'Expectations — mong đợi ở buổi khám',hint:'“Cô mong hôm nay được giúp điều gì?”',cues:['mong','muốn','kỳ vọng','hy vọng']},
+ {id:'e4',d:'ket-thuc',text:'Ảnh hưởng của bệnh lên sinh hoạt, công việc',hint:'“Đợt này ảnh hưởng đến việc nhà, việc làm của cô ra sao?”',cues:['ảnh hưởng','sinh hoạt','công việc','làm việc được không']},
+ {id:'e5',d:'ket-thuc',text:'Tóm tắt lại bệnh sử cho người bệnh nghe',hint:'“Em xin tóm tắt lại: cô đau… từ…, kèm…; cô xem em có bỏ sót gì không?”',cues:['tóm tắt lại','em nhắc lại','tóm lại']},
+ {id:'e6',d:'ket-thuc',text:'Hỏi người bệnh còn điều gì muốn bổ sung',hint:'“Còn điều gì cô muốn nói thêm không ạ?”',cues:['còn gì','bổ sung','muốn nói thêm','thêm gì']},
+ {id:'e7',d:'ket-thuc',text:'Cảm ơn và kết thúc lịch sự',hint:'“Cảm ơn cô đã hợp tác, em sẽ báo lại bác sĩ.”',cues:['cảm ơn','cám ơn']}
+];
+
+/* ---------- 2. NGÂN HÀNG CA (ca hạt giống) ---------- */
+const SEED_CASES = [{
+  id:'TVT-01', problem:'Đau thượng vị', title:'Đau thượng vị 01',
+  level:'Y4', difficulty:'Trung bình', durationMin:12,
+  candidateInstructions:{
+    setting:'Phòng khám Y học cổ truyền — Bệnh viện Trường Đại học Y Dược Cần Thơ',
+    task:['Khai thác bệnh sử theo SOCRATES','Vấn chẩn đầy đủ theo Thập vấn','Khai thác tiền sử, ICE','Nêu hướng biện chứng khi giám khảo hỏi'],
+    summary:'Một phụ nữ 34 tuổi đến khám vì đau vùng bụng trên.'
+  },
+  // Loại trừ mục không phù hợp với ca (ví dụ ca nam giới thì loại c21, c22)
+  excludeItems:[],
+  extraItems:[
+    {id:'x1',d:'hpi',text:'Hỏi liên quan giữa cơn đau và bữa ăn nhiều dầu mỡ',hint:'“Cơn đau xuất hiện sau khi ăn gì không ạ?”',cues:['sau khi ăn','bữa ăn','dầu mỡ','đồ béo']}
+  ],
+  patientScript:{
+    demographics:{name:'Nguyễn Thị Bích', age:34, sex:'nữ', occupation:'nội trợ, ở nhà chăm hai con nhỏ'},
+    openingLine:'Bác sĩ ơi, bụng trên tôi đau quá, đau từ trưa tới giờ.',
+    persona:{tone:'lo lắng, nói ngắn, hay xoa bụng', volunteers:'chỉ trả lời điều được hỏi trực tiếp'},
+    hpi:{
+      site:'vùng thượng vị, ngay dưới mũi ức',
+      onset:'đột ngột, khoảng 3 giờ trước, sau bữa trưa có thịt kho và lòng heo',
+      character:'đau quặn từng cơn, giữa các cơn thì âm ỉ',
+      radiation:'lan ra sau lưng và lên vai phải',
+      associated:'buồn nôn, đã nôn 2 lần ra thức ăn, không sốt, không nôn ra máu',
+      timing:'các cơn ngày càng dày và nặng hơn',
+      exacerbating:'nằm ngửa và ăn vào thì đau hơn',
+      relieving:'cúi người ra trước thì đỡ một chút',
+      severity:'7/10, lúc lên cơn thì 9/10'
+    },
+    thapVan:{
+      hanNhiet:'không sợ lạnh, người hơi hâm hấp nóng, không đo nhiệt độ',
+      han:'không ra mồ hôi nhiều, không có mồ hôi trộm',
+      dauThan:'không đau đầu, không chóng mặt, người mỏi mệt',
+      nhiTien:'nước tiểu vàng sậm, không buốt; đại tiện táo, 2 ngày chưa đi',
+      amThuc:'chán ăn, không dám ăn vì sợ đau; miệng đắng, khát và thích uống nước mát',
+      hungPhuc:'đầy tức vùng hạ sườn phải, không tức ngực, không hồi hộp',
+      nhiMuc:'tai không ù, mắt không mờ',
+      thuyMien:'đêm qua ngủ được, hôm nay đau nên không ngủ được',
+      cuuBenh:'2 tháng trước có một lần đau nhẹ tương tự sau khi ăn đám giỗ, tự hết sau vài giờ',
+      nhanDo:'sau bữa trưa nhiều dầu mỡ; gần đây lo nghĩ nhiều vì con nhỏ hay bệnh',
+      phuNu:'kinh nguyệt đều, chu kỳ 30 ngày, kỳ cuối cách nay 12 ngày, không rong huyết; không mang thai, không cho bú; khí hư bình thường'
+    },
+    pmh:'Chưa từng nằm viện, chưa mổ. Không tăng huyết áp, không đái tháo đường.',
+    drugs:'Ba giờ trước có tự uống 2 viên thuốc giảm đau mua ở tiệm, không rõ tên; thỉnh thoảng uống trà gừng.',
+    allergies:'Không dị ứng thuốc hay thức ăn nào biết được.',
+    family:'Mẹ ruột từng mổ sỏi mật cách đây 5 năm.',
+    social:'Không rượu bia, không thuốc lá. Hay ăn khuya, ăn nhiều đồ chiên xào. Ít vận động.',
+    ice:{
+      idea:'Nghĩ do ăn không tiêu, trúng thực',
+      concern:'Sợ bị đau dạ dày nặng hoặc ung thư như người quen',
+      expectation:'Muốn được giảm đau và được siêu âm bụng cho yên tâm',
+      impact:'Không nấu ăn, không chăm con được từ trưa tới giờ'
+    },
+    hiddenUnlessAsked:['đã tự uống 2 viên thuốc giảm đau','mẹ ruột mổ sỏi mật','lần đau nhẹ tương tự 2 tháng trước'],
+    neverReveal:['chẩn đoán cuối cùng','kết quả siêu âm hay xét nghiệm','tên bệnh theo y học hiện đại']
+  },
+  viva:[
+    {q:'Nêu chẩn đoán bát cương và tạng phủ của người bệnh này.',
+     model:'Bệnh ở lý, thuộc thực chứng, tính nhiệt; tạng phủ: Can Đởm thấp nhiệt, khí trệ phạm Vị.',
+     keyPoints:['lý chứng','thực chứng','nhiệt','Can Đởm','thấp nhiệt','phạm Vị']},
+    {q:'Chẩn đoán phân biệt theo y học hiện đại cần đặt ra là gì?',
+     model:'Cơn đau quặn mật / viêm túi mật cấp; viêm tuỵ cấp; loét dạ dày tá tràng có biến chứng; nhồi máu cơ tim thành dưới ở người có yếu tố nguy cơ.',
+     keyPoints:['đau quặn mật','viêm túi mật','viêm tuỵ cấp','loét dạ dày','nhồi máu cơ tim']},
+    {q:'Pháp điều trị YHCT và hướng xử trí trước mắt?',
+     model:'Sơ Can lợi Đởm, thanh nhiệt trừ thấp, hành khí chỉ thống; đồng thời chuyển khám chuyên khoa, siêu âm bụng và xét nghiệm vì có dấu hiệu cần loại trừ cấp cứu ngoại khoa.',
+     keyPoints:['sơ Can lợi Đởm','thanh nhiệt trừ thấp','hành khí chỉ thống','siêu âm','loại trừ ngoại khoa']}
+  ],
+  debrief:{
+    diagnosis:'Cơn đau quặn mật nghi do sỏi túi mật — theo YHCT là Can Đởm thấp nhiệt, khí trệ phạm Vị.',
+    teachingPoints:[
+      'Đau thượng vị lan sau lưng và vai phải, khởi phát sau bữa ăn nhiều mỡ là bộ ba gợi ý bệnh lý đường mật, không nên dừng ở “đau dạ dày”.',
+      'Miệng đắng, tiểu vàng sậm, đại tiện táo, tức hạ sườn phải là nhóm chứng hậu thấp nhiệt Can Đởm — chỉ khai thác được nếu hỏi đủ Thập vấn.',
+      'Việc người bệnh tự uống thuốc giảm đau chỉ lộ ra khi hỏi trực tiếp về thuốc đang dùng; bỏ sót sẽ đánh giá sai mức độ đau.',
+      'Hỏi kinh nguyệt ở phụ nữ tuổi sinh đẻ có đau bụng là bắt buộc, để loại trừ nguyên nhân sản phụ khoa.'
+    ]
+  }
+}];
+
+/* ---------- 3. STORE — mọi truy cập lưu trữ đi qua đây ---------- */
+const KEY='vca.v1';
+const store = {
+  _d:null,
+  load(){ if(this._d) return this._d;
+    try{ this._d = JSON.parse(localStorage.getItem(KEY)) || null; }catch(e){ this._d=null; }
+    if(!this._d) this._d = {student:'', apiKey:'', model:'gemini-2.5-flash', tutor:false, sessions:[], cases:[], notes:{}, voiceOn:true, handsFree:false, voiceName:'', voiceRate:1};
+    if(!this._d.cases || !this._d.cases.length) this._d.cases = JSON.parse(JSON.stringify(SEED_CASES));
+    return this._d; },
+  save(){ try{ localStorage.setItem(KEY, JSON.stringify(this._d)); }catch(e){ toast('Không lưu được vào trình duyệt'); } },
+  get(k){ return this.load()[k]; },
+  set(k,v){ this.load(); this._d[k]=v; this.save(); },
+  addSession(s){ this.load(); this._d.sessions.unshift(s); this.save(); },
+  cases(){ return this.load().cases; },
+  caseById(id){ return this.cases().find(c=>c.id===id); }
+};
+
+/* Bảng kiểm áp dụng cho một ca = lõi (trừ mục loại) + mục riêng của ca */
+function itemsFor(cs){
+  const ex = new Set(cs.excludeItems||[]);
+  return CORE_ITEMS.filter(i=>!ex.has(i.id)).concat(cs.extraItems||[]);
+}
+
+/* ---------- 4. LLM — Gemini ---------- */
+const GEM = {
+  url(model){ return 'https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent'; },
+  async call(body){
+    const key = store.get('apiKey');
+    if(!key) throw new Error('Chưa nhập khoá API Gemini (vào mục Cài đặt).');
+    const r = await fetch(this.url(store.get('model')||'gemini-2.5-flash'),{
+      method:'POST', headers:{'Content-Type':'application/json','x-goog-api-key':key}, body:JSON.stringify(body)});
+    if(!r.ok){ const t = await r.text(); throw new Error('Gemini '+r.status+': '+t.slice(0,300)); }
+    const j = await r.json();
+    const parts = j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts;
+    return (parts||[]).map(p=>p.text||'').join('').trim();
+  }
+};
+
+function patientPrompt(cs){
+  const p = cs.patientScript, d = p.demographics;
+  return [
+'Bạn đang ĐÓNG VAI MỘT NGƯỜI BỆNH trong buổi thi vấn chẩn của sinh viên Y học cổ truyền Việt Nam.',
+'Bạn KHÔNG phải trợ lý AI, KHÔNG phải bác sĩ. Chỉ nói bằng tiếng Việt, giọng người bệnh bình thường.',
+'',
+'HỒ SƠ VAI DIỄN',
+'Họ tên: '+d.name+' · '+d.age+' tuổi · '+d.sex+' · '+d.occupation,
+'Thái độ: '+p.persona.tone,
+'',
+'DỮ KIỆN ĐƯỢC PHÉP NÓI (chỉ khi sinh viên hỏi đúng nội dung tương ứng):',
+JSON.stringify({hpi:p.hpi, thapVan:p.thapVan, tienSuBenh:p.pmh, thuocDangDung:p.drugs,
+  diUng:p.allergies, giaDinh:p.family, loiSong:p.social, suyNghiLoLang:p.ice}, null, 1),
+'',
+'QUY TẮC BẮT BUỘC',
+'1. Chỉ dùng dữ kiện ở trên. Nếu sinh viên hỏi điều không có trong dữ kiện, trả lời tự nhiên kiểu "Cái đó tôi không để ý" hoặc "Tôi không rõ nữa". TUYỆT ĐỐI không bịa thêm triệu chứng.',
+'2. Không tự khai. Chỉ trả lời đúng điều được hỏi, dài 1–2 câu như người bệnh thật. Không liệt kê một loạt triệu chứng.',
+'3. Những điều sau chỉ nói khi được hỏi trực tiếp: '+(p.hiddenUnlessAsked||[]).join(' | '),
+'4. Không bao giờ tiết lộ: '+(p.neverReveal||[]).join(' | ')+'. Nếu bị hỏi "tôi bị bệnh gì", hãy nói "Tôi không biết, nên mới đi khám".',
+'5. Không dùng thuật ngữ y khoa. Nói theo cách người dân nói (ví dụ "nóng ruột, cồn cào", không nói "vị quản thống").',
+'6. Không nhắc sinh viên còn thiếu câu hỏi nào. Không nhận xét, không gợi ý, không đóng vai giám khảo.',
+'7. Nếu sinh viên chào hỏi, hãy đáp lễ phép rồi nêu lý do đến khám: "'+p.openingLine+'"'
+].join('\n');
+}
+
+async function patientReply(cs, history, text){
+  const contents = history.map(m=>({role: m.role==='student'?'user':'model', parts:[{text:m.text}]}));
+  contents.push({role:'user', parts:[{text:text}]});
+  return await GEM.call({
+    systemInstruction:{parts:[{text:patientPrompt(cs)}]},
+    contents, generationConfig:{temperature:0.7, maxOutputTokens:300}
+  });
+}
+
+async function aiGrade(cs, transcript, items){
+  const convo = transcript.map(m=>(m.role==='student'?'SV: ':'BN: ')+m.text).join('\n');
+  const list = items.map(i=>({id:i.id, text:i.text})).map(o=>o.id+' | '+o.text).join('\n');
+  const prompt = [
+'Bạn là giảng viên Y học cổ truyền chấm một trạm thi vấn chẩn theo bảng kiểm.',
+'Đọc toàn bộ hội thoại rồi chấm TỪNG MỤC của bảng kiểm.',
+'',
+'Quy tắc chấm:',
+'- pass = true CHỈ KHI chính sinh viên chủ động hỏi (hoặc chủ động thực hiện, với các mục về giao tiếp). Bệnh nhân tự khai mà sinh viên không hỏi thì KHÔNG tính đạt.',
+'- evidence: trích nguyên văn NGẮN câu nói của sinh viên chứng minh mục đó đạt (để trống nếu không đạt).',
+'- tip: khi không đạt, viết MỘT câu hỏi mẫu bằng tiếng Việt mà sinh viên đáng lẽ nên hỏi (để trống nếu đạt).',
+'- comment (ở cấp toàn bài): 2–3 câu nhận xét kỹ thuật đặt câu hỏi — câu đóng/mở, câu dẫn dắt, ngắt lời, mạch logic.',
+'',
+'BẢNG KIỂM (mã | nội dung):',
+list,
+'',
+'HỘI THOẠI:',
+convo || '(không có nội dung)',
+'',
+'Trả về DUY NHẤT một JSON hợp lệ, không kèm giải thích, dạng:',
+'{"items":[{"id":"a1","pass":true,"evidence":"...","tip":""}],"comment":"..."}'
+  ].join('\n');
+  const raw = await GEM.call({contents:[{role:'user',parts:[{text:prompt}]}],
+    generationConfig:{temperature:0.2, responseMimeType:'application/json'}});
+  let out; try{ out = JSON.parse(raw); }catch(e){
+    const m = raw.match(/\{[\s\S]*\}/); if(!m) throw new Error('AI trả về dữ liệu không đọc được.');
+    out = JSON.parse(m[0]);
+  }
+  const map={}; (out.items||[]).forEach(r=>{ map[r.id]={pass:!!r.pass, evidence:r.evidence||'', tip:r.tip||''}; });
+  items.forEach(i=>{ if(!map[i.id]) map[i.id]={pass:false, evidence:'', tip:i.hint||''}; });
+  return {marks:map, comment: out.comment||''};
+}
+
+/* Chấm dự phòng khi không có API: đối chiếu từ khoá */
+function cueGrade(transcript, items){
+  const said = transcript.filter(m=>m.role==='student').map(m=>norm(m.text));
+  const map={};
+  items.forEach(i=>{
+    const hit = (i.cues||[]).some(c=>said.some(s=>s.includes(norm(c))));
+    map[i.id]={pass:hit, evidence:'', tip: hit?'':(i.hint||'')};
+  });
+  return {marks:map, comment:'Chấm bằng đối chiếu từ khoá (không dùng AI) — chỉ mang tính tham khảo.'};
+}
+function norm(s){ return (s||'').toLowerCase().normalize('NFC'); }
+
+/* ---------- 4b. GIỌNG NÓI — nhận dạng & đọc (Web Speech API) ---------- */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const VOICE = {
+  supported: !!SR && !!window.speechSynthesis,
+  rec:null, listening:false, speaking:false, finalText:'',
+  voices(){ try{ return (speechSynthesis.getVoices()||[]).filter(v=>/vi[-_]VN|Vietnam/i.test(v.lang+' '+v.name)); }catch(e){ return []; } },
+  pickVoice(){ const want=store.get('voiceName'); const vs=this.voices();
+    return vs.find(v=>v.name===want) || vs[0] || null; },
+  setState(t, hot){ const el=document.getElementById('vstate');
+    if(el) el.innerHTML = hot ? '<b>'+t+'</b>' : t; },
+  ensure(){
+    if(this.rec || !this.supported) return;
+    const r = new SR();
+    r.lang='vi-VN'; r.continuous=false; r.interimResults=true; r.maxAlternatives=1;
+    r.onstart=()=>{ this.listening=true; this.finalText=''; this.paint(); this.setState('Đang nghe…', true); };
+    r.onresult=(e)=>{
+      let inter='';
+      for(let i=e.resultIndex;i<e.results.length;i++){
+        const tr=e.results[i][0].transcript;
+        if(e.results[i].isFinal) this.finalText += tr; else inter += tr;
+      }
+      const inp=document.getElementById('inp'); if(inp) inp.value=(this.finalText+' '+inter).trim();
+    };
+    r.onerror=(e)=>{ this.listening=false; this.paint();
+      const m = e.error==='not-allowed' ? 'Trình duyệt chặn micro — cho phép quyền micro, và mở trang qua http/https (không dùng file://).'
+              : e.error==='no-speech' ? 'Không nghe thấy gì.' : 'Lỗi nhận dạng: '+e.error;
+      this.setState(m); if(e.error==='not-allowed') toast(m); };
+    r.onend=()=>{ this.listening=false; this.paint();
+      const txt=this.finalText.trim();
+      if(txt){ this.setState('Đã nghe xong'); const inp=document.getElementById('inp'); if(inp) inp.value=txt; send(); }
+      else this.setState('Sẵn sàng'); };
+    this.rec=r;
+  },
+  start(){ if(!this.supported) return toast('Trình duyệt không hỗ trợ nhận dạng giọng nói');
+    this.stopSpeaking(); this.ensure();
+    try{ this.rec.start(); }catch(e){ /* đang chạy rồi */ } },
+  stop(){ if(this.rec && this.listening) try{ this.rec.stop(); }catch(e){} },
+  toggle(){ this.listening ? this.stop() : this.start(); },
+  stopSpeaking(){ try{ speechSynthesis.cancel(); }catch(e){} this.speaking=false; this.paint(); },
+  speak(text, done){
+    if(!this.supported || !store.get('voiceOn')){ if(done) done(); return; }
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);
+      const v=this.pickVoice(); if(v) u.voice=v;
+      u.lang='vi-VN'; u.rate=parseFloat(store.get('voiceRate')||1); u.pitch=1;
+      u.onstart=()=>{ this.speaking=true; this.paint(); this.setState('Bệnh nhân đang nói…'); };
+      u.onend=()=>{ this.speaking=false; this.paint(); this.setState('Sẵn sàng'); if(done) done(); };
+      u.onerror=()=>{ this.speaking=false; this.paint(); if(done) done(); };
+      speechSynthesis.speak(u);
+    }catch(e){ if(done) done(); }
+  },
+  paint(){ const b=document.getElementById('micBtn'); if(!b) return;
+    b.className='mic'+(this.listening?' on':this.speaking?' speak':'');
+    b.textContent=this.listening?'⏹':'🎙'; }
+};
+if(VOICE.supported && speechSynthesis.onvoiceschanged!==undefined)
+  speechSynthesis.onvoiceschanged=()=>{ if(V.view==='settings') render(); };
+
+/* ---------- 5. TÍNH ĐIỂM ---------- */
+function scoreOf(items, marks){
+  const byDomain={}; let total=0; const missedCritical=[];
+  DOMAINS.forEach(d=>{
+    const its = items.filter(i=>i.d===d.id);
+    const pass = its.filter(i=>marks[i.id] && marks[i.id].pass).length;
+    const pts = its.length ? (pass/its.length)*d.weight : 0;
+    byDomain[d.id]={pass, n:its.length, pts:Math.round(pts*10)/10, weight:d.weight};
+    total += pts;
+  });
+  items.forEach(i=>{ if(i.critical && !(marks[i.id]&&marks[i.id].pass)) missedCritical.push(i.text); });
+  return {byDomain, station:Math.round(total*10)/10, missedCritical};
+}
+function finalScore(station, vivaPts){
+  const t = station*0.9 + (vivaPts||0);           // trạm 90% + viva 10 điểm
+  return Math.round(t*10)/10;
+}
+function gradeLabel(total, missedCritical){
+  if(missedCritical.length) return {t:'Chưa đạt', c:'wr'};
+  if(total>=80) return {t:'Giỏi', c:'ok'};
+  if(total>=65) return {t:'Khá', c:'ok'};
+  if(total>=50) return {t:'Đạt', c:'in'};
+  return {t:'Chưa đạt', c:'wr'};
+}
+
+/* ---------- 6. TRẠNG THÁI PHIÊN ---------- */
+let V = {view:'home', caseId:null, tab:'huongdan'};
+let SES = null;   // phiên đang chạy
+let timerId = null;
+
+function newSession(cs){
+  return {sessionId:'S'+Date.now(), student:store.get('student')||'(chưa đặt tên)', caseId:cs.id,
+    caseTitle:cs.title, startedAt:new Date().toISOString(), durationSec:0, remaining:cs.durationMin*60,
+    transcript:[], selfMarking:{}, aiMarking:{}, aiComment:'', vivaAnswers:{}, vivaPts:null, scores:null, ended:false};
+}
+
+/* ---------- 7. VIEWS ---------- */
+const app = document.getElementById('app');
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+function go(view, opts){ Object.assign(V,{view}, opts||{}); render(); window.scrollTo(0,0); }
+
+function renderNav(){
+  const items=[['home','Trang chủ'],['cases','Thư viện ca'],['portfolio','Hồ sơ'],['settings','Cài đặt']];
+  if(store.get('tutor')) items.splice(3,0,['tutor','Giảng viên']);
+  document.getElementById('nav').innerHTML = items.map(([k,l])=>
+    '<button data-go="'+k+'" class="'+(V.view===k?'on':'')+'">'+l+'</button>').join('');
+}
+
+function vHome(){
+  const ss = store.get('sessions'), name = store.get('student');
+  const avg = ss.length ? Math.round(ss.reduce((a,s)=>a+(s.scores?s.scores.total:0),0)/ss.length*10)/10 : '—';
+  const acc = ss.filter(s=>s.selfAccuracy!=null);
+  const accV = acc.length ? Math.round(acc.reduce((a,s)=>a+s.selfAccuracy,0)/acc.length*100)+'%' : '—';
+  return '<div class="hero"><div class="eyebrow">Trạm luyện kỹ năng · 12 phút</div>'+
+   '<h1>Chào '+esc(name||'bạn')+'</h1>'+
+   '<p>Luyện vấn chẩn với bệnh nhân mô phỏng, tự chấm theo bảng kiểm rồi đối chiếu với kết quả chấm của AI.</p></div>'+
+   '<div class="grid g3" style="margin:24px 0">'+
+    '<div class="stat"><div class="v">'+ss.length+'</div><div class="l">Phiên đã hoàn thành</div></div>'+
+    '<div class="stat"><div class="v">'+avg+'</div><div class="l">Điểm trung bình / 100</div></div>'+
+    '<div class="stat"><div class="v">'+accV+'</div><div class="l">Độ chính xác tự đánh giá</div></div>'+
+   '</div>'+
+   (!store.get('apiKey') ? '<div class="note"><b>Chưa có khoá API Gemini.</b> Vào <a href="#" data-go="settings">Cài đặt</a> để dán khoá — không có khoá thì bệnh nhân ảo không trả lời được, phần chấm sẽ chạy ở chế độ đối chiếu từ khoá.</div>' : '')+
+   '<div class="row"><button class="btn" data-go="cases">Chọn ca để bắt đầu</button>'+
+   (ss.length?'<button class="btn ghost" data-go="portfolio">Xem hồ sơ học tập</button>':'')+'</div>'+
+   weakSpots(ss);
+}
+
+function weakSpots(ss){
+  if(ss.length<2) return '';
+  const cnt={};
+  ss.forEach(s=>{ const its=itemsFor(store.caseById(s.caseId)||{});
+    its.forEach(i=>{ const m=s.aiMarking[i.id]; if(m && !m.pass) cnt[i.id]=(cnt[i.id]||0)+1; }); });
+  const top = Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  if(!top.length) return '';
+  const all = CORE_ITEMS.concat([]);
+  return '<hr class="sep"><h2 style="font-size:20px">Mục hay bỏ sót</h2>'+
+   '<div class="tablewrap" style="margin-top:12px"><table><thead><tr><th>Mục bảng kiểm</th><th style="width:110px">Số lần bỏ sót</th></tr></thead><tbody>'+
+   top.map(([id,n])=>{ const it=all.find(x=>x.id===id); return '<tr><td>'+esc(it?it.text:id)+'</td><td>'+n+'/'+ss.length+'</td></tr>'; }).join('')+
+   '</tbody></table></div>';
+}
+
+function vCases(){
+  const cs = store.cases();
+  const probs = ['Tất cả'].concat([...new Set(cs.map(c=>c.problem))]);
+  const cur = V.filter||'Tất cả';
+  const list = cs.filter(c=>cur==='Tất cả'||c.problem===cur);
+  const done = {}; store.get('sessions').forEach(s=>{ done[s.caseId]=(done[s.caseId]||0)+1; });
+  return '<h1 style="font-size:30px">Thư viện ca</h1>'+
+   '<p class="muted" style="margin-top:6px">Chọn vấn đề lâm sàng, rồi chọn tình huống cụ thể.</p>'+
+   '<div class="filters">'+probs.map(p=>'<button data-filter="'+esc(p)+'" class="'+(p===cur?'on':'')+'">'+esc(p)+'</button>').join('')+'</div>'+
+   '<div class="grid g2">'+ list.map(c=>
+     '<div class="case"><div class="row" style="gap:6px"><span class="pill ac">'+esc(c.problem)+'</span>'+
+     '<span class="pill">'+esc(c.difficulty)+'</span><span class="pill">'+c.durationMin+' phút</span>'+
+     (done[c.id]?'<span class="pill ok">đã làm '+done[c.id]+' lần</span>':'')+'</div>'+
+     '<h3>'+esc(c.title)+'</h3>'+
+     '<div class="d">'+esc(c.candidateInstructions.summary||'')+'</div>'+
+     '<div class="row"><button class="btn sm" data-start="'+c.id+'">Vào trạm</button></div></div>').join('')+
+   '</div>'+ (list.length?'':'<p class="muted">Chưa có ca nào. Vào mục Giảng viên để nhập ca từ file JSON.</p>');
+}
+
+function vBrief(){
+  const cs = store.caseById(V.caseId);
+  const ci = cs.candidateInstructions;
+  return '<div class="narrow"><div class="eyebrow">Bước 1 / 5 · Hướng dẫn</div>'+
+   '<h1 style="font-size:30px;margin-top:8px">'+esc(cs.title)+'</h1>'+
+   '<div class="panel" style="margin-top:20px">'+
+    '<h3 style="font-size:15px">Bối cảnh</h3><p style="margin:8px 0 18px">'+esc(ci.setting)+'</p>'+
+    '<h3 style="font-size:15px">Nhiệm vụ</h3><ul style="margin:8px 0 18px">'+ci.task.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>'+
+    '<h3 style="font-size:15px">Thời gian</h3><p style="margin:8px 0 0">'+cs.durationMin+' phút hỏi bệnh. Hết giờ trạm tự đóng, sau đó vẫn chấm bình thường.</p>'+
+   '</div>'+
+   '<div class="note i">Có thể <b>nói trực tiếp</b> với bệnh nhân: bấm nút micro (hoặc phím Space) để nói, bệnh nhân sẽ trả lời thành tiếng. Bật “Rảnh tay” để máy tự nghe tiếp sau mỗi câu trả lời.</div>'+
+   '<div class="note">Trong lúc hỏi bệnh, tab <b>Kịch bản bệnh nhân</b> bị khoá. Kịch bản chỉ mở sau khi nộp bài.</div>'+
+   '<div class="row"><button class="btn" id="startBtn">Bắt đầu vấn chẩn</button>'+
+   '<button class="btn ghost" data-go="cases">Quay lại</button></div></div>';
+}
+
+function vConsult(){
+  const cs = store.caseById(SES.caseId);
+  return '<div class="eyebrow">Bước 2 / 5 · Vấn chẩn</div>'+
+   '<div class="consult" style="margin-top:14px">'+
+    '<div class="chatbox"><div class="chathead">'+
+      '<strong>'+esc(cs.patientScript.demographics.name)+'</strong>'+
+      '<span class="muted" style="font-size:14px">'+cs.patientScript.demographics.age+' tuổi · '+esc(cs.patientScript.demographics.sex)+'</span>'+
+      '<span class="timer" id="timer">--:--</span></div>'+
+      '<div class="msgs" id="msgs"></div>'+
+      '<div class="composer"><textarea id="inp" placeholder="Nhập câu hỏi, hoặc bấm micro để nói…"></textarea>'+
+      '<button class="mic" id="micBtn" title="Bấm để nói (phím Space khi không gõ)">🎙</button>'+
+      '<button class="btn" id="sendBtn">Gửi</button></div>'+
+      '<div class="voicebar">'+
+        (VOICE.supported
+          ? '<label><input type="checkbox" id="ckVoice"'+(store.get('voiceOn')?' checked':'')+'> Bệnh nhân nói thành tiếng</label>'+
+            '<label><input type="checkbox" id="ckHands"'+(store.get('handsFree')?' checked':'')+'> Rảnh tay (tự nghe tiếp)</label>'+
+            '<span class="vstate" id="vstate">Sẵn sàng</span>'
+          : '<span>Trình duyệt này không hỗ trợ nhận dạng giọng nói — dùng Chrome hoặc Edge, và mở qua http/https.</span>')+
+      '</div></div>'+
+    '<div class="side"><div class="tabs">'+
+      '<button data-tab="huongdan" class="'+(V.tab==='huongdan'?'on':'')+'">Hướng dẫn</button>'+
+      '<button data-tab="kichban" class="'+(V.tab==='kichban'?'on':'')+'">Kịch bản</button>'+
+      '<button data-tab="tainguyen" class="'+(V.tab==='tainguyen'?'on':'')+'">Tài nguyên</button></div>'+
+      '<div class="panel"><div class="tabbody">'+tabBody(cs)+'</div></div>'+
+      '<div class="row" style="margin-top:12px"><button class="btn ghost sm" id="endBtn">Kết thúc &amp; chấm</button></div>'+
+    '</div></div>';
+}
+
+function tabBody(cs){
+  if(V.tab==='huongdan'){
+    const ci=cs.candidateInstructions;
+    return '<h4>Bối cảnh</h4><p>'+esc(ci.setting)+'</p><h4>Nhiệm vụ</h4><ul>'+ci.task.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>';
+  }
+  if(V.tab==='kichban'){
+    if(!store.get('tutor') && !SES.ended) return '<div class="locked">Kịch bản bị khoá trong lúc hỏi bệnh.<br>Sẽ mở sau khi nộp bài.</div>';
+    const p=cs.patientScript;
+    return '<h4>Hành chính</h4><p>'+esc(p.demographics.name)+' · '+p.demographics.age+' tuổi · '+esc(p.demographics.occupation)+'</p>'+
+      '<h4>Bệnh sử</h4><ul>'+Object.entries(p.hpi).map(([k,v])=>'<li><b>'+k+':</b> '+esc(v)+'</li>').join('')+'</ul>'+
+      '<h4>Thập vấn</h4><ul>'+Object.entries(p.thapVan).map(([k,v])=>'<li><b>'+k+':</b> '+esc(v)+'</li>').join('')+'</ul>'+
+      '<h4>Tiền sử</h4><ul><li>'+esc(p.pmh)+'</li><li>Thuốc: '+esc(p.drugs)+'</li><li>Dị ứng: '+esc(p.allergies)+'</li><li>Gia đình: '+esc(p.family)+'</li><li>Lối sống: '+esc(p.social)+'</li></ul>'+
+      '<h4>ICE</h4><ul>'+Object.entries(p.ice).map(([k,v])=>'<li><b>'+k+':</b> '+esc(v)+'</li>').join('')+'</ul>';
+  }
+  const notes = store.get('notes')[cs.id]||'';
+  return '<h4>Ghi chú riêng tại trạm</h4><textarea id="noteBox" style="height:140px;font-family:inherit" placeholder="Ghi chú của bạn, chỉ bạn thấy khi quay lại trạm này…">'+esc(notes)+'</textarea>'+
+    '<h4>Gợi nhắc khung vấn chẩn</h4><ul><li><b>SOCRATES</b> — Site, Onset, Character, Radiation, Associated, Time, Exacerbating/Relieving, Severity</li>'+
+    '<li><b>Thập vấn</b> — hàn nhiệt · hãn · đầu thân · nhị tiện · ẩm thực · hung phúc · nhĩ mục · thuỵ miên · cựu bệnh &amp; nhân do · kinh đới thai sản</li>'+
+    '<li><b>ICE</b> — người bệnh nghĩ gì, lo gì, mong gì</li></ul>';
+}
+
+function vMarking(){
+  const cs = store.caseById(SES.caseId), items = itemsFor(cs);
+  const hasAI = Object.keys(SES.aiMarking).length>0;
+  const head = '<div class="eyebrow">Bước 3 / 5 · Marking</div><h1 style="font-size:28px;margin-top:8px">Bảng kiểm '+esc(cs.title)+'</h1>';
+  if(!hasAI){
+    return head+'<div class="note">Tự đánh giá trước: tick những mục bạn cho là <b>mình đã chủ động hỏi</b>. Sau khi lưu, kết quả chấm của AI mới hiện ra để đối chiếu.</div>'+
+      sheet(items, 'self')+
+      '<div class="row" style="margin-top:18px"><button class="btn" id="aiBtn">Lưu tự chấm &amp; xem kết quả AI</button>'+
+      '<button class="btn ghost" id="transBtn">Xem lại hội thoại</button></div>'+
+      '<div id="transBox"></div>';
+  }
+  const sc = scoreOf(items, SES.aiMarking);
+  const diff = items.filter(i=>!!SES.selfMarking[i.id] !== !!(SES.aiMarking[i.id]&&SES.aiMarking[i.id].pass)).length;
+  const acc = Math.round((1-diff/items.length)*100);
+  return head+
+    '<div class="grid g3" style="margin:18px 0">'+
+     '<div class="stat"><div class="v">'+sc.station+'</div><div class="l">Điểm trạm / 100</div></div>'+
+     '<div class="stat"><div class="v">'+acc+'%</div><div class="l">Trùng khớp tự chấm ↔ AI</div></div>'+
+     '<div class="stat"><div class="v">'+diff+'</div><div class="l">Mục lệch nhau</div></div></div>'+
+    (SES.aiComment?'<div class="note i"><b>Nhận xét kỹ thuật hỏi bệnh.</b> '+esc(SES.aiComment)+'</div>':'')+
+    sheet(items,'compare')+
+    '<div class="row" style="margin-top:18px"><button class="btn" id="vivaBtn">Tiếp: câu hỏi giảng viên</button>'+
+    '<button class="btn ghost" id="transBtn">Xem lại hội thoại</button></div><div id="transBox"></div>';
+}
+
+function sheet(items, mode){
+  let html='<div class="mk"><div class="mkhead"><div>Mục bảng kiểm</div>'+
+    (mode==='self'?'<div class="col">Đã hỏi</div><div class="col"></div>':'<div class="col">SV</div><div class="col">AI</div>')+'</div>';
+  DOMAINS.forEach(d=>{
+    const its = items.filter(i=>i.d===d.id); if(!its.length) return;
+    const nSelf = its.filter(i=>SES.selfMarking[i.id]).length;
+    const nAI = its.filter(i=>SES.aiMarking[i.id]&&SES.aiMarking[i.id].pass).length;
+    html+='<div class="mkdom"><span>'+esc(d.label)+'</span><span>'+(mode==='self'?nSelf:nAI)+'/'+its.length+' · trọng số '+d.weight+'</span></div>';
+    its.forEach(i=>{
+      const sv = !!SES.selfMarking[i.id];
+      const ai = SES.aiMarking[i.id];
+      const pass = ai && ai.pass;
+      const lech = mode==='compare' && sv!==!!pass;
+      html+='<div class="mkitem'+(lech?' diff':'')+(i.critical?' crit':'')+'"><div class="t">'+esc(i.text);
+      if(mode==='compare' && ai){
+        if(ai.evidence) html+='<span class="ev">“'+esc(ai.evidence)+'”</span>';
+        else if(ai.tip) html+='<span class="hint">Nên hỏi: '+esc(ai.tip)+'</span>';
+      } else if(mode==='self' && i.hint===undefined){ }
+      html+='</div>';
+      if(mode==='self'){
+        html+='<div class="col"><input type="checkbox" id="ck-'+i.id+'" data-ck="'+i.id+'"'+(sv?' checked':'')+'></div><div class="col"></div>';
+      } else {
+        html+='<div class="col"><span class="dot '+(sv?'y':'n')+'">'+(sv?'✓':'–')+'</span></div>'+
+              '<div class="col"><span class="dot '+(pass?'y':'n')+'" data-flip="'+i.id+'" title="'+(store.get('tutor')?'Giảng viên: bấm để ghi đè':'')+'" style="'+(store.get('tutor')?'cursor:pointer':'')+'">'+(pass?'✓':'–')+'</span></div>';
+      }
+      html+='</div>';
+    });
+  });
+  return html+'</div>'+(items.some(i=>i.critical)?'<p class="muted" style="font-size:13.5px;margin-top:8px">● mục trọng yếu — bỏ sót thì trạm không xếp loại Đạt.</p>':'');
+}
+
+function vViva(){
+  const cs = store.caseById(SES.caseId);
+  return '<div class="narrow"><div class="eyebrow">Bước 4 / 5 · Câu hỏi giảng viên</div>'+
+   '<h1 style="font-size:28px;margin-top:8px">Giám khảo hỏi thêm</h1>'+
+   '<p class="muted">Trả lời bằng lời của bạn. Sau khi nộp, đáp án mẫu sẽ hiện ra để đối chiếu.</p>'+
+   cs.viva.map((q,ix)=>'<div class="panel" style="margin-top:14px"><h3 style="font-size:16px">'+(ix+1)+'. '+esc(q.q)+'</h3>'+
+     '<textarea data-viva="'+ix+'" style="height:92px;margin-top:10px;font-family:inherit">'+esc(SES.vivaAnswers[ix]||'')+'</textarea>'+
+     '<div class="row" style="margin-top:10px"><label style="font-size:13px;font-weight:600;color:var(--ink-2)">Tự chấm câu này:</label>'+
+     [0,1,2,3].map(p=>'<button class="btn ghost sm" data-vp="'+ix+':'+p+'" style="'+((SES.vivaPts&&SES.vivaPts[ix]===p)?'border-color:var(--accent);color:var(--accent)':'')+'">'+p+'</button>').join('')+
+     '<span class="muted" style="font-size:13px">0 = không nêu được · 3 = đầy đủ</span></div>'+
+     '<details style="margin-top:10px"><summary style="cursor:pointer;font-size:14px;color:var(--accent)">Xem đáp án mẫu</summary>'+
+     '<p style="font-size:15px">'+esc(q.model)+'</p><p class="muted" style="font-size:13.5px">Ý bắt buộc: '+q.keyPoints.map(esc).join(' · ')+'</p></details></div>').join('')+
+   '<div class="row" style="margin-top:18px"><button class="btn" id="finishBtn">Xem kết quả trạm</button></div></div>';
+}
+
+function vReport(){
+  const cs = store.caseById(SES.caseId), items = itemsFor(cs);
+  const sc = SES.scores;
+  const g = gradeLabel(sc.total, sc.missedCritical);
+  const missed = items.filter(i=>!(SES.aiMarking[i.id]&&SES.aiMarking[i.id].pass));
+  const got = items.filter(i=>SES.aiMarking[i.id]&&SES.aiMarking[i.id].evidence).slice(0,3);
+  return '<div class="narrow"><div class="eyebrow">Bước 5 / 5 · Kết quả</div>'+
+   '<div class="panel" style="margin-top:14px;display:flex;gap:24px;align-items:center;flex-wrap:wrap">'+
+    '<div><div class="bigscore">'+sc.total+'</div><div class="muted" style="font-size:13px">trên 100</div></div>'+
+    '<div><span class="pill '+g.c+'" style="font-size:13px">'+g.t+'</span>'+
+    '<div style="margin-top:8px;font-size:15px">'+esc(cs.title)+' · '+esc(SES.student)+'</div>'+
+    '<div class="muted" style="font-size:13.5px">Thời gian hỏi bệnh: '+fmt(SES.durationSec)+' · '+SES.transcript.filter(m=>m.role==='student').length+' lượt hỏi</div></div></div>'+
+   (sc.missedCritical.length?'<div class="note"><b>Bỏ sót mục trọng yếu:</b> '+sc.missedCritical.map(esc).join(' · ')+'. Trạm không xếp loại Đạt dù tổng điểm bao nhiêu.</div>':'')+
+   '<h2 style="font-size:20px;margin-top:26px">Điểm theo miền</h2>'+
+   DOMAINS.map(d=>{ const b=sc.byDomain[d.id];
+     return '<div class="srow"><span class="lbl">'+esc(d.label)+'</span><span class="bar"><i style="width:'+(b.weight?b.pts/b.weight*100:0)+'%"></i></span>'+
+     '<span class="val">'+b.pts+'/'+b.weight+'</span></div>'; }).join('')+
+   '<div class="srow"><span class="lbl">Câu hỏi giảng viên</span><span class="bar"><i class="b" style="width:'+(sc.viva/10*100)+'%"></i></span><span class="val">'+sc.viva+'/10</span></div>'+
+   '<h2 style="font-size:20px;margin-top:26px">Làm tốt</h2><ul>'+
+   (got.length?got.map(i=>'<li>'+esc(i.text)+' — <span class="muted">“'+esc(SES.aiMarking[i.id].evidence)+'”</span></li>').join(''):'<li class="muted">Chưa ghi nhận mục nào có bằng chứng rõ.</li>')+'</ul>'+
+   '<h2 style="font-size:20px;margin-top:22px">Cần cải thiện</h2><ul>'+
+   (missed.slice(0,6).map(i=>'<li>'+esc(i.text)+(SES.aiMarking[i.id]&&SES.aiMarking[i.id].tip?' — <span class="muted">'+esc(SES.aiMarking[i.id].tip)+'</span>':'')+'</li>').join('')||'<li class="muted">Không bỏ sót mục nào.</li>')+'</ul>'+
+   '<h2 style="font-size:20px;margin-top:22px">Rút kinh nghiệm ca này</h2>'+
+   '<div class="panel"><p style="margin-top:0"><b>Hướng chẩn đoán:</b> '+esc(cs.debrief.diagnosis)+'</p><ul>'+
+   cs.debrief.teachingPoints.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul></div>'+
+   '<div class="row" style="margin-top:20px"><button class="btn" data-go="cases">Làm ca khác</button>'+
+   '<button class="btn ghost" data-go="portfolio">Vào hồ sơ</button>'+
+   '<button class="btn ghost" id="printBtn">In / lưu PDF</button></div></div>';
+}
+
+function vPortfolio(){
+  const ss = store.get('sessions');
+  if(!ss.length) return '<h1 style="font-size:30px">Hồ sơ học tập</h1><p class="muted">Chưa có phiên nào. Hoàn thành một trạm để bắt đầu ghi nhận.</p><button class="btn" data-go="cases">Chọn ca</button>';
+  const pts = ss.slice().reverse().map(s=>s.scores.total);
+  return '<h1 style="font-size:30px">Hồ sơ học tập</h1><p class="muted" style="margin-top:6px">'+esc(store.get('student')||'(chưa đặt tên)')+' · '+ss.length+' phiên</p>'+
+   '<div class="panel" style="margin:18px 0">'+spark(pts)+'</div>'+
+   '<div class="tablewrap"><table><thead><tr><th>Thời gian</th><th>Ca</th><th>Điểm</th><th>Xếp loại</th><th>Tự đánh giá</th><th></th></tr></thead><tbody>'+
+   ss.map((s,ix)=>{ const g=gradeLabel(s.scores.total, s.scores.missedCritical||[]);
+     return '<tr><td>'+new Date(s.startedAt).toLocaleString('vi-VN')+'</td><td>'+esc(s.caseTitle)+'</td>'+
+     '<td class="mono">'+s.scores.total+'</td><td><span class="pill '+g.c+'">'+g.t+'</span></td>'+
+     '<td class="mono">'+(s.selfAccuracy!=null?Math.round(s.selfAccuracy*100)+'%':'—')+'</td>'+
+     '<td><button class="btn ghost sm" data-open="'+ix+'">Xem lại</button></td></tr>'; }).join('')+
+   '</tbody></table></div>'+
+   '<div class="row" style="margin-top:18px"><button class="btn ghost sm" id="expBtn">Xuất hồ sơ JSON</button>'+
+   '<button class="btn ghost sm" id="impBtn">Nhập hồ sơ JSON</button>'+
+   '<input type="file" id="impFile" accept="application/json" style="display:none;width:auto"></div>';
+}
+
+function spark(pts){
+  const w=560,h=120,pad=22;
+  if(pts.length<2) return '<p class="muted" style="margin:0">Cần ít nhất 2 phiên để vẽ đường tiến bộ. Điểm gần nhất: <b>'+pts[0]+'</b>/100.</p>';
+  const max=100, stepX=(w-pad*2)/(pts.length-1);
+  const d = pts.map((p,i)=>(i?'L':'M')+(pad+i*stepX).toFixed(1)+','+(h-pad-(p/max)*(h-pad*2)).toFixed(1)).join(' ');
+  return '<div style="overflow-x:auto"><svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" role="img" aria-label="Đường điểm theo phiên">'+
+   '<line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="var(--line)" stroke-width="1"/>'+
+   '<line x1="'+pad+'" y1="'+(h-pad-0.5*(h-pad*2))+'" x2="'+(w-pad)+'" y2="'+(h-pad-0.5*(h-pad*2))+'" stroke="var(--line)" stroke-dasharray="3 3" stroke-width="1"/>'+
+   '<text x="2" y="'+(h-pad-0.5*(h-pad*2)+4)+'" font-size="10" fill="var(--muted)">50</text>'+
+   '<text x="2" y="'+(h-pad+4)+'" font-size="10" fill="var(--muted)">0</text>'+
+   '<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="2"/>'+
+   pts.map((p,i)=>'<circle cx="'+(pad+i*stepX).toFixed(1)+'" cy="'+(h-pad-(p/max)*(h-pad*2)).toFixed(1)+'" r="3" fill="var(--accent)"/>').join('')+
+   '</svg></div><p class="muted" style="font-size:13px;margin:6px 0 0">Điểm tổng qua từng phiên, từ cũ đến mới.</p>';
+}
+
+function vSettings(){
+  const d=store.load();
+  return '<div class="narrow"><h1 style="font-size:30px">Cài đặt</h1>'+
+   '<div class="panel" style="margin-top:18px">'+
+   '<div class="field"><label class="fld" for="stName">Tên người học</label><input id="stName" value="'+esc(d.student)+'" placeholder="Nguyễn Văn A — Y4B"></div>'+
+   '<div class="field"><label class="fld" for="apiKey">Khoá API Gemini</label><input id="apiKey" type="password" value="'+esc(d.apiKey)+'" placeholder="AIza…"><p class="muted" style="font-size:13px;margin:6px 0 0">Lấy khoá miễn phí tại Google AI Studio. Khoá chỉ lưu trong trình duyệt máy này, không gửi đi đâu khác ngoài Google.</p></div>'+
+   '<div class="field"><label class="fld" for="model">Model</label><select id="model">'+
+   ['gemini-2.5-flash','gemini-2.5-pro','gemini-2.0-flash'].map(m=>'<option'+(d.model===m?' selected':'')+'>'+m+'</option>').join('')+'</select></div>'+
+   '<div class="field"><label class="fld"><input type="checkbox" id="tutorCk" style="width:auto;vertical-align:-3px"'+(d.tutor?' checked':'')+'> Chế độ giảng viên (mở kịch bản, cho ghi đè kết quả AI, nhập/xuất ca)</label></div>'+
+   '<button class="btn" id="saveSet">Lưu</button></div>'+
+   '<h2 style="font-size:19px;margin-top:26px">Giọng nói</h2>'+
+   '<div class="panel" style="margin-top:12px">'+
+   (VOICE.supported
+     ? '<div class="field"><label class="fld" for="voiceName">Giọng đọc của bệnh nhân</label><select id="voiceName">'+
+       (VOICE.voices().length
+         ? VOICE.voices().map(v=>'<option'+(d.voiceName===v.name?' selected':'')+'>'+esc(v.name)+'</option>').join('')
+         : '<option value="">(máy chưa cài giọng tiếng Việt — trình duyệt sẽ đọc bằng giọng mặc định)</option>')+
+       '</select></div>'+
+       '<div class="field"><label class="fld" for="voiceRate">Tốc độ đọc — <span id="rateVal">'+(d.voiceRate||1)+'</span>×</label>'+
+       '<input type="range" id="voiceRate" min="0.7" max="1.4" step="0.05" value="'+(d.voiceRate||1)+'"></div>'+
+       '<div class="field"><label class="fld"><input type="checkbox" id="voiceOnSet" style="width:auto;vertical-align:-3px"'+(d.voiceOn?' checked':'')+'> Mặc định bật đọc thành tiếng khi vào trạm</label></div>'+
+       '<button class="btn ghost" id="testVoice">Nghe thử</button>'
+     : '<p style="margin:0">Trình duyệt này không có Web Speech API. Dùng Chrome hoặc Edge bản mới.</p>')+
+   '</div>'+
+   '<div class="note i">Nhận dạng giọng nói cần trang chạy qua <b>http/https</b> — mở trực tiếp bằng file:// thì Chrome chặn micro. Cách nhanh nhất: để file trong một thư mục rồi chạy <code>python3 -m http.server 8000</code>, vào <code>localhost:8000</code>. Giọng đọc tiếng Việt lấy từ hệ điều hành: trên macOS cài ở System Settings → Accessibility → Spoken Content → System Voice → Vietnamese.</div>'+
+   '<div class="note">Bản prototype giữ khoá API trên máy người dùng — chỉ dùng trong nội bộ tổ thử nghiệm. Khi mở cho cả khoá, khoá phải chuyển về máy chủ.</div></div>';
+}
+
+function vTutor(){
+  const cs = store.cases();
+  return '<div class="narrow"><h1 style="font-size:30px">Giảng viên</h1>'+
+   '<h2 style="font-size:19px;margin-top:22px">Ngân hàng ca</h2>'+
+   '<div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Mã</th><th>Ca</th><th>Vấn đề</th><th></th></tr></thead><tbody>'+
+   cs.map(c=>'<tr><td class="mono">'+esc(c.id)+'</td><td>'+esc(c.title)+'</td><td>'+esc(c.problem)+'</td>'+
+   '<td><button class="btn ghost sm" data-check="'+c.id+'">Kiểm tra</button> <button class="btn ghost sm" data-expcase="'+c.id+'">Xuất JSON</button></td></tr>').join('')+
+   '</tbody></table></div>'+
+   '<div class="row" style="margin-top:14px"><button class="btn" id="impCase">Nhập ca từ file JSON</button>'+
+   '<input type="file" id="caseFile" accept="application/json" style="display:none;width:auto">'+
+   '<button class="btn ghost" id="tplBtn">Tải mẫu ca rỗng</button></div>'+
+   '<div id="checkOut"></div>'+
+   '<h2 style="font-size:19px;margin-top:30px">Bảng kiểm lõi</h2>'+
+   '<p class="muted">'+CORE_ITEMS.length+' mục dùng chung cho mọi ca, chia theo 5 miền. Mỗi ca có thể loại bớt mục (<code>excludeItems</code>) hoặc thêm mục riêng (<code>extraItems</code>).</p>'+
+   '<div class="tablewrap"><table><thead><tr><th>Miền</th><th>Số mục</th><th>Trọng số</th></tr></thead><tbody>'+
+   DOMAINS.map(d=>'<tr><td>'+esc(d.label)+'</td><td>'+CORE_ITEMS.filter(i=>i.d===d.id).length+'</td><td>'+d.weight+'</td></tr>').join('')+
+   '</tbody></table></div></div>';
+}
+
+/* ---------- 8. RENDER + SỰ KIỆN ---------- */
+function render(){
+  renderNav();
+  const v=V.view;
+  app.innerHTML = v==='home'?vHome(): v==='cases'?vCases(): v==='brief'?vBrief():
+    v==='consult'?vConsult(): v==='marking'?vMarking(): v==='viva'?vViva():
+    v==='report'?vReport(): v==='portfolio'?vPortfolio(): v==='settings'?vSettings():
+    v==='tutor'?vTutor(): vHome();
+  if(v==='consult'){ paintMsgs(); paintTimer(); VOICE.paint(); const i=document.getElementById('inp'); if(i) i.focus(); }
+}
+
+document.addEventListener('click', async (e)=>{
+  const t = e.target.closest('[data-go],[data-filter],[data-start],[data-tab],[data-ck],[data-flip],[data-vp],[data-open],[data-check],[data-expcase]');
+  const id = e.target.id;
+
+  if(t && t.dataset.go!==undefined){ e.preventDefault(); go(t.dataset.go); return; }
+  if(t && t.dataset.filter){ V.filter=t.dataset.filter; render(); return; }
+  if(t && t.dataset.start){ V.caseId=t.dataset.start; go('brief'); return; }
+  if(t && t.dataset.tab){ V.tab=t.dataset.tab; render(); return; }
+  if(t && t.dataset.flip && store.get('tutor')){
+    const m=SES.aiMarking[t.dataset.flip]; if(m){ m.pass=!m.pass; render(); toast('Đã ghi đè kết quả AI'); } return; }
+  if(t && t.dataset.vp){ const [ix,p]=t.dataset.vp.split(':').map(Number);
+    SES.vivaPts=SES.vivaPts||{}; SES.vivaPts[ix]=p; saveVivaText(); render(); return; }
+  if(t && t.dataset.open!==undefined){ const s=store.get('sessions')[+t.dataset.open];
+    SES=JSON.parse(JSON.stringify(s)); SES.ended=true; go('report'); return; }
+  if(t && t.dataset.check){ tutorCheck(t.dataset.check); return; }
+  if(t && t.dataset.expcase){ download(store.caseById(t.dataset.expcase), 'case_'+t.dataset.expcase+'.json'); return; }
+
+  if(id==='startBtn'){ const cs=store.caseById(V.caseId); SES=newSession(cs);
+    SES.transcript.push({role:'patient', text:cs.patientScript.openingLine, t:0});
+    startTimer(); go('consult'); return; }
+  if(id==='sendBtn'){ await send(); return; }
+  if(id==='micBtn'){ VOICE.toggle(); return; }
+  if(id==='endBtn'){ endConsult(); return; }
+  if(id==='aiBtn'){ await runGrading(); return; }
+  if(id==='vivaBtn'){ go('viva'); return; }
+  if(id==='finishBtn'){ finish(); return; }
+  if(id==='transBtn'){ const b=document.getElementById('transBox');
+    b.innerHTML = b.innerHTML ? '' : '<div class="panel" style="margin-top:14px;max-height:320px;overflow:auto">'+
+      SES.transcript.map(m=>'<p style="margin:6px 0"><b>'+(m.role==='student'?'SV':'BN')+':</b> '+esc(m.text)+'</p>').join('')+'</div>'; return; }
+  if(id==='saveSet'){ store.set('student', document.getElementById('stName').value.trim());
+    store.set('apiKey', document.getElementById('apiKey').value.trim());
+    store.set('model', document.getElementById('model').value);
+    store.set('tutor', document.getElementById('tutorCk').checked);
+    const vn=document.getElementById('voiceName'), vr=document.getElementById('voiceRate'), vo=document.getElementById('voiceOnSet');
+    if(vn) store.set('voiceName', vn.value); if(vr) store.set('voiceRate', parseFloat(vr.value)); if(vo) store.set('voiceOn', vo.checked);
+    toast('Đã lưu'); render(); return; }
+  if(id==='testVoice'){ const vn=document.getElementById('voiceName'), vr=document.getElementById('voiceRate');
+    if(vn) store.set('voiceName', vn.value); if(vr) store.set('voiceRate', parseFloat(vr.value));
+    const was=store.get('voiceOn'); store.set('voiceOn', true);
+    VOICE.speak('Bác sĩ ơi, bụng trên tôi đau quá, đau từ trưa tới giờ.', ()=>store.set('voiceOn', was)); return; }
+  if(id==='printBtn'){ window.print(); return; }
+  if(id==='expBtn'){ download({exported:new Date().toISOString(), student:store.get('student'), sessions:store.get('sessions')}, 'hoso_vanchan.json'); return; }
+  if(id==='impBtn'){ document.getElementById('impFile').click(); return; }
+  if(id==='impCase'){ document.getElementById('caseFile').click(); return; }
+  if(id==='tplBtn'){ download(emptyCase(), 'mau_ca_rong.json'); return; }
+});
+
+document.addEventListener('change', (e)=>{
+  if(e.target.dataset && e.target.dataset.ck){ SES.selfMarking[e.target.dataset.ck]=e.target.checked; return; }
+  if(e.target.id==='ckVoice'){ store.set('voiceOn', e.target.checked); if(!e.target.checked) VOICE.stopSpeaking(); return; }
+  if(e.target.id==='ckHands'){ store.set('handsFree', e.target.checked); return; }
+  if(e.target.id==='impFile'){ readJSON(e.target, d=>{
+      if(!d.sessions) return toast('File không đúng định dạng hồ sơ');
+      store.set('sessions', d.sessions.concat(store.get('sessions'))); toast('Đã nhập '+d.sessions.length+' phiên'); render(); }); }
+  if(e.target.id==='caseFile'){ readJSON(e.target, d=>{
+      const arr = Array.isArray(d)?d:[d];
+      const bad = arr.map(validateCase).filter(Boolean);
+      if(bad.length) return toast('Ca chưa hợp lệ: '+bad[0]);
+      const cs=store.cases(); arr.forEach(c=>{ const i=cs.findIndex(x=>x.id===c.id); if(i>=0) cs[i]=c; else cs.push(c); });
+      store.set('cases',cs); toast('Đã nhập '+arr.length+' ca'); render(); }); }
+});
+document.addEventListener('keydown',(e)=>{
+  if(e.target.id==='inp' && e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); }
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+  if(!typing && e.code==='Space' && V.view==='consult' && SES && !SES.ended){ e.preventDefault(); VOICE.toggle(); }
+});
+document.addEventListener('input',(e)=>{
+  if(e.target.id==='voiceRate'){ const v=document.getElementById('rateVal'); if(v) v.textContent=e.target.value; }
+  if(e.target.id==='noteBox'){ const n=store.get('notes'); n[SES?SES.caseId:V.caseId]=e.target.value; store.set('notes',n); }
+  if(e.target.dataset && e.target.dataset.viva!==undefined){ SES.vivaAnswers[e.target.dataset.viva]=e.target.value; }
+});
+function saveVivaText(){ document.querySelectorAll('[data-viva]').forEach(t=>{ SES.vivaAnswers[t.dataset.viva]=t.value; }); }
+
+/* --- hội thoại --- */
+function paintMsgs(){
+  const box=document.getElementById('msgs'); if(!box) return;
+  box.innerHTML = SES.transcript.map(m=>'<div class="msg '+(m.role==='student'?'s':m.role==='sys'?'sys':'p')+'">'+esc(m.text)+'</div>').join('');
+  box.scrollTop = box.scrollHeight;
+}
+async function send(){
+  const inp=document.getElementById('inp'); if(!inp) return;
+  const text=inp.value.trim(); if(!text || SES.ended) return;
+  inp.value='';
+  SES.transcript.push({role:'student', text, t:SES.durationSec});
+  paintMsgs();
+  const box=document.getElementById('msgs');
+  const ph=document.createElement('div'); ph.className='msg p'; ph.innerHTML='<span class="spin"></span>';
+  box.appendChild(ph); box.scrollTop=box.scrollHeight;
+  try{
+    const cs=store.caseById(SES.caseId);
+    const hist=SES.transcript.slice(0,-1).filter(m=>m.role!=='sys');
+    const rep=await patientReply(cs, hist, text);
+    SES.transcript.push({role:'patient', text:rep, t:SES.durationSec});
+    ph.remove(); paintMsgs();
+    VOICE.speak(rep, ()=>{ if(store.get('handsFree') && SES && !SES.ended && V.view==='consult') VOICE.start(); });
+  }catch(err){
+    SES.transcript.push({role:'sys', text:'Không gọi được Gemini — '+err.message});
+  }
+  ph.remove(); paintMsgs();
+}
+
+/* --- đồng hồ --- */
+function fmt(s){ s=Math.max(0,Math.round(s)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+function paintTimer(){ const el=document.getElementById('timer'); if(!el) return;
+  el.textContent=fmt(SES.remaining); el.className='timer'+(SES.remaining<=120?' low':''); }
+function startTimer(){ clearInterval(timerId);
+  timerId=setInterval(()=>{ if(!SES||SES.ended) return;
+    SES.remaining--; SES.durationSec++;
+    if(V.view==='consult') paintTimer();
+    if(SES.remaining<=0){ SES.transcript.push({role:'sys',text:'Hết giờ. Trạm đã đóng.'}); endConsult(); }
+  },1000); }
+
+function endConsult(){ if(!SES) return; SES.ended=true; VOICE.stop(); VOICE.stopSpeaking(); clearInterval(timerId); go('marking'); }
+
+async function runGrading(){
+  const btn=document.getElementById('aiBtn'); btn.disabled=true; btn.innerHTML='<span class="spin"></span> Đang chấm…';
+  const cs=store.caseById(SES.caseId), items=itemsFor(cs);
+  const convo=SES.transcript.filter(m=>m.role!=='sys');
+  try{
+    let res;
+    if(store.get('apiKey')) res = await aiGrade(cs, convo, items);
+    else { res = cueGrade(convo, items); toast('Không có khoá API — chấm bằng đối chiếu từ khoá'); }
+    SES.aiMarking=res.marks; SES.aiComment=res.comment;
+  }catch(err){
+    const res=cueGrade(convo, items); SES.aiMarking=res.marks;
+    SES.aiComment='AI chấm lỗi ('+err.message+'). Đã chuyển sang đối chiếu từ khoá.';
+  }
+  render();
+}
+
+function finish(){
+  saveVivaText();
+  const cs=store.caseById(SES.caseId), items=itemsFor(cs);
+  const sc=scoreOf(items, SES.aiMarking);
+  const maxViva=cs.viva.length*3;
+  const raw=Object.values(SES.vivaPts||{}).reduce((a,b)=>a+b,0);
+  sc.viva = maxViva ? Math.round(raw/maxViva*10*10)/10 : 0;
+  sc.total = finalScore(sc.station, sc.viva);
+  SES.scores=sc;
+  const diff=items.filter(i=>!!SES.selfMarking[i.id] !== !!(SES.aiMarking[i.id]&&SES.aiMarking[i.id].pass)).length;
+  SES.selfAccuracy = Math.round((1-diff/items.length)*100)/100;
+  SES.endedAt=new Date().toISOString();
+  store.addSession(JSON.parse(JSON.stringify(SES)));
+  go('report');
+}
+
+/* --- tiện ích giảng viên --- */
+function validateCase(c){
+  if(!c || !c.id || !c.title) return 'thiếu id hoặc title';
+  if(!c.patientScript || !c.patientScript.demographics) return 'thiếu patientScript.demographics';
+  if(!c.candidateInstructions) return 'thiếu candidateInstructions';
+  if(!Array.isArray(c.viva)) return 'thiếu mảng viva';
+  return null;
+}
+function tutorCheck(id){
+  const c=store.caseById(id), p=c.patientScript, out=[];
+  const err=validateCase(c); if(err) out.push('Cấu trúc: '+err);
+  const need=[['hpi',['site','onset','character','radiation','associated','timing','exacerbating','relieving','severity']],
+              ['thapVan',['hanNhiet','han','dauThan','nhiTien','amThuc','hungPhuc','nhiMuc','thuyMien','cuuBenh','nhanDo']]];
+  need.forEach(([k,keys])=>keys.forEach(x=>{ if(!p[k]||!p[k][x]) out.push('Thiếu dữ kiện '+k+'.'+x+' — bảng kiểm có hỏi mục này, bệnh nhân ảo sẽ phải trả lời "không rõ".'); }));
+  ['pmh','drugs','allergies','family','social'].forEach(k=>{ if(!p[k]) out.push('Thiếu '+k); });
+  if(!p.ice) out.push('Thiếu ice (Ideas/Concerns/Expectations)');
+  const box=document.getElementById('checkOut');
+  box.innerHTML='<div class="note '+(out.length?'':'i')+'" style="margin-top:14px"><b>'+esc(c.title)+' — '+(out.length?out.length+' cảnh báo':'không có cảnh báo')+'</b>'+
+    (out.length?'<ul style="margin:8px 0 0">'+out.map(o=>'<li>'+esc(o)+'</li>').join('')+'</ul>':'')+'</div>';
+}
+function emptyCase(){
+  return {id:'MA-CA', problem:'Vấn đề lâm sàng', title:'Tên ca', level:'Y4', difficulty:'Trung bình', durationMin:12,
+   candidateInstructions:{setting:'', task:[''], summary:''}, excludeItems:[], extraItems:[],
+   patientScript:{demographics:{name:'',age:0,sex:'',occupation:''}, openingLine:'', persona:{tone:'',volunteers:''},
+    hpi:{site:'',onset:'',character:'',radiation:'',associated:'',timing:'',exacerbating:'',relieving:'',severity:''},
+    thapVan:{hanNhiet:'',han:'',dauThan:'',nhiTien:'',amThuc:'',hungPhuc:'',nhiMuc:'',thuyMien:'',cuuBenh:'',nhanDo:'',phuNu:''},
+    pmh:'',drugs:'',allergies:'',family:'',social:'',
+    ice:{idea:'',concern:'',expectation:'',impact:''}, hiddenUnlessAsked:[], neverReveal:[]},
+   viva:[{q:'',model:'',keyPoints:['']}], debrief:{diagnosis:'',teachingPoints:['']}};
+}
+function download(obj,name){
+  const b=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function readJSON(input, cb){
+  const f=input.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ cb(JSON.parse(r.result)); }catch(e){ toast('File JSON lỗi'); } input.value=''; };
+  r.readAsText(f);
+}
+
+render();
+</script>
+</body>
+</html>
